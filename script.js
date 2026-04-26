@@ -1,16 +1,44 @@
-// ── CONFIG ────────────────────────────────────────────────────
+// ── CONFIG ─────────────────────────────────────────────────────
 const WEDDING_DATE    = new Date('2026-06-14T08:00:00+07:00');
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbys1yuhE6p1IbJI2AGIU84mCBTVmvjG9jSfq-t3L3eHXy-YvxZRMiJF72LZvcFPbsiEVg/exec";
 
+// Detail acara untuk tombol kalender
+const CALENDAR_EVENT = {
+  title: "Pernikahan Taufik & Ati",
+  start: "20260614T080000",   // format: YYYYMMDDTHHmmss
+  end:   "20260614T150000",
+  location: "Masjid Al-Hasanah, Kp. Bunder, Desa Cibaregbeg, Cianjur",
+  details: "Akad Nikah 08.00-10.00 WIB | Resepsi 11.00-15.00 WIB",
+};
 
-// ── GATE ──────────────────────────────────────────────────────
+
+// ── NAMA TAMU DARI URL ──────────────────────────────────────────
+// Pemakaian: rversse.github.io/undangan/?to=Pak+Budi
+function getGuestName() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('to') || '';
+}
+
+function applyGuestName() {
+  const name = getGuestName();
+  const toEl   = document.getElementById('gate-to');
+  const nameEl = document.getElementById('gate-name');
+  if (name && toEl && nameEl) {
+    toEl.style.display   = 'block';
+    nameEl.style.display = 'block';
+    nameEl.textContent   = name;
+  }
+}
+
+
+// ── GATE ────────────────────────────────────────────────────────
 function openInvite() {
   document.getElementById('gate').classList.add('hide');
   triggerFades();
 }
 
 
-// ── COUNTDOWN ─────────────────────────────────────────────────
+// ── COUNTDOWN ───────────────────────────────────────────────────
 function updateCountdown() {
   const diff = WEDDING_DATE - new Date();
   const pad  = n => String(Math.max(0, n)).padStart(2, '0');
@@ -32,7 +60,7 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 
-// ── SCROLL FADE ───────────────────────────────────────────────
+// ── SCROLL FADE ─────────────────────────────────────────────────
 function triggerFades() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
@@ -47,7 +75,19 @@ function triggerFades() {
 }
 
 
-// ── RSVP ──────────────────────────────────────────────────────
+// ── TOMBOL SIMPAN KALENDER ──────────────────────────────────────
+function openCalendar() {
+  const e = CALENDAR_EVENT;
+  const url = `https://calendar.google.com/calendar/render?action=TEMPLATE`
+    + `&text=${encodeURIComponent(e.title)}`
+    + `&dates=${e.start}/${e.end}`
+    + `&location=${encodeURIComponent(e.location)}`
+    + `&details=${encodeURIComponent(e.details)}`;
+  window.open(url, '_blank');
+}
+
+
+// ── RSVP ────────────────────────────────────────────────────────
 class RsvpManager {
 
   static _collectFormData() {
@@ -116,7 +156,10 @@ class RsvpManager {
   }
 }
 
-// Override handleRSVP yang dipanggil dari onsubmit di form HTML
 function handleRSVP(e) {
   return RsvpManager.handleSubmit(e);
 }
+
+
+// ── INIT ────────────────────────────────────────────────────────
+applyGuestName();
