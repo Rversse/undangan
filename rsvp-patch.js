@@ -9,7 +9,7 @@
  * 4. Upload file ini ke repo, replace yang lama
  */
 
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/GANTI_DENGAN_URL_DEPLOYMENT/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbys1yuhE6p1IbJI2AGIU84mCBTVmvjG9jSfq-t3L3eHXy-YvxZRMiJF72LZvcFPbsiEVg/exec";
 
 class RsvpManager {
 
