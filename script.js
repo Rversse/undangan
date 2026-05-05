@@ -1,165 +1,284 @@
-// ── CONFIG ─────────────────────────────────────────────────────
-const WEDDING_DATE    = new Date('2026-06-14T08:00:00+07:00');
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbys1yuhE6p1IbJI2AGIU84mCBTVmvjG9jSfq-t3L3eHXy-YvxZRMiJF72LZvcFPbsiEVg/exec";
-
-// Detail acara untuk tombol kalender
-const CALENDAR_EVENT = {
-  title: "Pernikahan Taufik & Ati",
-  start: "20260614T080000",   // format: YYYYMMDDTHHmmss
-  end:   "20260614T150000",
-  location: "Masjid Al-Hasanah, Kp. Bunder, Desa Cibaregbeg, Cianjur",
-  details: "Akad Nikah 08.00-10.00 WIB | Resepsi 11.00-15.00 WIB",
-};
-
-
-// ── NAMA TAMU DARI URL ──────────────────────────────────────────
-// Pemakaian: rversse.github.io/undangan/?to=Pak+Budi
-function getGuestName() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get('to') || '';
+:root {
+  --teal:       #14919B;
+  --teal-dark:  #0A5C63;
+  --teal-light: #A8DADC;
+  --teal-pale:  #E8F6F7;
+  --gold:       #C8A96E;
+  --gold-light: #E8D5A3;
+  --cream:      #F4FAFA;
+  --white:      #FFFFFF;
+  --dark:       #0A2E35;
+  --text:       #1A3A40;
+  --muted:      #3D7A82;
 }
 
-function applyGuestName() {
-  const name = getGuestName();
-  const toEl   = document.getElementById('gate-to');
-  const nameEl = document.getElementById('gate-name');
-  if (name && toEl && nameEl) {
-    toEl.style.display   = 'block';
-    nameEl.style.display = 'block';
-    nameEl.textContent   = name;
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
 }
 
+/* ─── ORNAMENTS ─── */
+.ornament { display: block; width: 120px; margin: 0 auto; opacity: 0.55; }
+.ornament-sm { width: 60px; }
 
-// ── GATE ────────────────────────────────────────────────────────
-function openInvite() {
-  document.getElementById('gate').classList.add('hide');
-  triggerFades();
+/* ─── GATE ─── */
+#gate {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--dark);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 20px;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
 }
-
-
-// ── COUNTDOWN ───────────────────────────────────────────────────
-function updateCountdown() {
-  const diff = WEDDING_DATE - new Date();
-  const pad  = n => String(Math.max(0, n)).padStart(2, '0');
-
-  if (diff <= 0) {
-    ['days','hours','mins','secs'].forEach(id =>
-      document.getElementById('cd-' + id).textContent = '00'
-    );
-    return;
-  }
-
-  document.getElementById('cd-days').textContent  = pad(Math.floor(diff / 86400000));
-  document.getElementById('cd-hours').textContent = pad(Math.floor((diff % 86400000) / 3600000));
-  document.getElementById('cd-mins').textContent  = pad(Math.floor((diff % 3600000)  / 60000));
-  document.getElementById('cd-secs').textContent  = pad(Math.floor((diff % 60000)    / 1000));
+#gate.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+#gate .gate-to {
+  color: var(--teal-light);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
 }
-
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
-
-// ── SCROLL FADE ─────────────────────────────────────────────────
-function triggerFades() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+#gate .gate-name {
+  color: var(--gold-light);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 4vw, 1.5rem);
+  font-style: italic;
+  margin-top: -8px;
 }
-
-
-// ── TOMBOL SIMPAN KALENDER ──────────────────────────────────────
-function openCalendar() {
-  const e = CALENDAR_EVENT;
-  const url = `https://calendar.google.com/calendar/render?action=TEMPLATE`
-    + `&text=${encodeURIComponent(e.title)}`
-    + `&dates=${e.start}/${e.end}`
-    + `&location=${encodeURIComponent(e.location)}`
-    + `&details=${encodeURIComponent(e.details)}`;
-  window.open(url, '_blank');
+#gate h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-weight: 300;
+  color: var(--cream);
+  text-align: center;
+  line-height: 1.3;
 }
-
-
-// ── RSVP ────────────────────────────────────────────────────────
-class RsvpManager {
-
-  static _collectFormData() {
-    return {
-      nama:   document.getElementById('name')?.value?.trim()    || '',
-      wa:     document.getElementById('phone')?.value?.trim()   || '',
-      hadir:  document.getElementById('attendance')?.value      || '',
-      jumlah: document.getElementById('guests')?.value          || '1',
-      ucapan: document.getElementById('message')?.value?.trim() || '',
-    };
-  }
-
-  static _validate(data) {
-    if (!data.nama)  throw new Error('Nama wajib diisi');
-    if (!data.hadir) throw new Error('Mohon pilih konfirmasi kehadiran');
-  }
-
-  static _setLoading(loading) {
-    const btn = document.querySelector('.btn-submit');
-    if (!btn) return;
-    btn.disabled      = loading;
-    btn.textContent   = loading ? 'Mengirim...' : 'Kirim Konfirmasi';
-    btn.style.opacity = loading ? '0.6' : '1';
-  }
-
-  static _showSuccess() {
-    const form    = document.getElementById('rsvpForm');
-    const success = document.getElementById('rsvpSuccess');
-    if (form)    form.style.display    = 'none';
-    if (success) success.style.display = 'block';
-  }
-
-  static _showError(message) {
-    let el = document.getElementById('rsvp-error');
-    if (!el) {
-      el = document.createElement('p');
-      el.id = 'rsvp-error';
-      el.style.cssText = 'margin-top:12px;color:#c0392b;font-size:0.85rem;text-align:center;';
-      document.getElementById('rsvpForm')?.appendChild(el);
-    }
-    el.textContent = '❌ ' + message;
-  }
-
-  static async submit(data) {
-    await fetch(APPS_SCRIPT_URL, {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(data),
-      mode:    'no-cors',
-    });
-  }
-
-  static async handleSubmit(e) {
-    e.preventDefault();
-    RsvpManager._setLoading(true);
-    try {
-      const data = RsvpManager._collectFormData();
-      RsvpManager._validate(data);
-      await RsvpManager.submit(data);
-      RsvpManager._showSuccess();
-    } catch (err) {
-      console.error('RSVP error:', err);
-      RsvpManager._showError(err.message || 'Gagal mengirim. Coba lagi ya.');
-      RsvpManager._setLoading(false);
-    }
-  }
+#gate h2 em { font-style: italic; color: var(--gold); }
+#gate .gate-date {
+  color: var(--teal-light);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
 }
-
-function handleRSVP(e) {
-  return RsvpManager.handleSubmit(e);
+#openBtn {
+  margin-top: 8px;
+  padding: 14px 42px;
+  background: transparent;
+  border: 1px solid var(--teal);
+  color: var(--teal-light);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
 }
+#openBtn:hover { background: var(--teal); color: var(--white); }
 
+/* ─── HERO ─── */
+#hero {
+  min-height: 100svh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 80px 24px;
+  position: relative;
+  background: var(--cream);
+  overflow: hidden;
+}
+#hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(20,145,155,0.1) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 80% 80%, rgba(200,169,110,0.07) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-tag { font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--muted); margin-bottom: 32px; }
+.hero-names { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.2rem, 12vw, 7rem); font-weight: 300; line-height: 1.05; color: var(--dark); }
+.hero-names em { font-style: italic; color: var(--teal); }
+.hero-amp { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 5vw, 2.8rem); font-style: italic; color: var(--gold); display: block; margin: 4px 0; }
+.hero-date { margin-top: 32px; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+.divider { width: 1px; height: 60px; background: linear-gradient(to bottom, transparent, var(--teal), transparent); margin: 36px auto; }
 
-// ── INIT ────────────────────────────────────────────────────────
-applyGuestName();
+/* ─── FADE IN ─── */
+.fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.fade-up.visible { opacity: 1; transform: none; }
+
+/* ─── SECTION BASE ─── */
+section { padding: 100px 24px; max-width: 680px; margin: 0 auto; text-align: center; }
+.section-tag { font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--teal); margin-bottom: 20px; }
+.section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 400; color: var(--dark); line-height: 1.2; }
+.section-title em { font-style: italic; color: var(--teal); }
+.section-body { margin-top: 20px; font-size: 0.9rem; line-height: 1.9; color: var(--muted); }
+
+/* ─── COUNTDOWN ─── */
+#countdown { background: var(--dark); max-width: 100%; padding: 80px 24px; }
+#countdown .inner { max-width: 680px; margin: 0 auto; text-align: center; }
+#countdown .section-tag { color: var(--teal-light); }
+#countdown .section-title { color: var(--cream); }
+#countdown .section-title em { color: var(--gold); }
+.countdown-grid { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 48px; }
+.cd-block { background: rgba(20,145,155,0.08); border: 1px solid rgba(20,145,155,0.3); width: 100px; padding: 24px 12px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.cd-num { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; color: var(--gold); line-height: 1; min-width: 3ch; text-align: center; }
+.cd-label { font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal-light); }
+
+/* ─── EVENT CARDS ─── */
+.event-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
+@media (max-width: 560px) { .event-grid { grid-template-columns: 1fr; } }
+.event-card { border: 1px solid var(--teal-light); padding: 40px 28px; text-align: center; position: relative; background: var(--white); }
+.event-card::before { content: ''; position: absolute; top: 8px; left: 8px; right: -8px; bottom: -8px; border: 1px solid rgba(20,145,155,0.15); z-index: -1; }
+.event-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--dark); margin-bottom: 16px; }
+.event-card p { font-size: 0.82rem; line-height: 1.9; color: var(--muted); }
+.event-card .time { display: inline-block; margin-top: 12px; font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); border-top: 1px solid var(--teal-light); padding-top: 12px; }
+
+/* ─── CALENDAR BUTTON ─── */
+.btn-calendar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 36px;
+  padding: 12px 28px;
+  background: transparent;
+  border: 1px solid var(--teal-light);
+  color: var(--muted);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+.btn-calendar:hover { background: var(--teal); color: var(--white); border-color: var(--teal); }
+
+/* ─── MAPS ─── */
+#maps { padding-top: 0; max-width: 100%; }
+#maps .inner { max-width: 680px; margin: 0 auto; text-align: center; padding: 100px 24px 60px; }
+.map-wrapper { width: 100%; max-width: 780px; margin: 40px auto 0; border: 1px solid var(--teal-light); overflow: hidden; position: relative; }
+.map-wrapper::after { content: ''; position: absolute; top: 10px; left: 10px; right: -10px; bottom: -10px; border: 1px solid rgba(20,145,155,0.2); z-index: -1; }
+.map-wrapper iframe { width: 100%; height: 380px; display: block; border: none; }
+
+/* ─── RSVP ─── */
+#rsvp { background: var(--teal-pale); max-width: 100%; padding: 100px 24px; }
+#rsvp .inner { max-width: 520px; margin: 0 auto; text-align: center; }
+.rsvp-form { margin-top: 48px; display: flex; flex-direction: column; gap: 16px; text-align: left; }
+.rsvp-form input,
+.rsvp-form select,
+.rsvp-form textarea {
+  width: 100%; padding: 14px 18px;
+  background: var(--white);
+  border: 1px solid var(--teal-light);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.85rem; font-weight: 300;
+  color: var(--text); outline: none;
+  transition: border-color 0.3s;
+}
+.rsvp-form input::placeholder,
+.rsvp-form textarea::placeholder { color: var(--muted); }
+.rsvp-form input:focus,
+.rsvp-form select:focus,
+.rsvp-form textarea:focus { border-color: var(--teal); }
+.rsvp-form select {
+  appearance: none; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%233D7A82' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 16px center;
+}
+.rsvp-form textarea { resize: vertical; min-height: 90px; }
+.rsvp-form label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
+.btn-submit { width: 100%; padding: 16px; background: var(--dark); color: var(--teal-light); border: none; font-family: 'Jost', sans-serif; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; transition: background 0.3s, color 0.3s; margin-top: 8px; }
+.btn-submit:hover { background: var(--teal); color: var(--white); }
+.rsvp-success { display: none; margin-top: 24px; padding: 20px; border: 1px solid var(--teal); background: var(--white); font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--text); text-align: center; }
+
+/* ─── FOOTER ─── */
+footer { background: var(--dark); text-align: center; padding: 60px 24px; }
+footer .names { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 5vw, 2.2rem); font-weight: 300; font-style: italic; color: var(--gold); }
+footer .footer-date { margin-top: 16px; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); }
+footer .footer-credit { margin-top: 8px; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(168,218,220,0.45); }
+
+/* ─── GOLD LINE ─── */
+.gold-line { width: 80px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 28px auto; }
+
+/* ─── TURUT MENGUNDANG ─── */
+.turut-wrap {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto 8px;
+  text-align: center;
+}
+.turut-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+.turut-grid {
+  display: grid;
+  grid-template-columns: 1fr 32px 1fr;
+  gap: 0;
+  align-items: center;
+}
+.turut-side {
+  padding: 0 16px;
+  text-align: center;
+}
+.turut-family-tag {
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 12px;
+}
+.turut-parents {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  font-weight: 400;
+  color: var(--dark);
+  line-height: 1.7;
+}
+.turut-amp {
+  font-style: italic;
+  color: var(--gold);
+  font-size: 0.9em;
+}
+.turut-placeholder {
+  color: var(--muted);
+  opacity: 0.55;
+  font-style: italic;
+}
+.turut-line {
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 14px auto;
+}
+.turut-child {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 2.8vw, 1.25rem);
+  font-weight: 500;
+  color: var(--dark);
+  letter-spacing: 0.03em;
+}
+.turut-child-sub {
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.turut-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 420px) {
+  .turut-grid {
+    grid-template-columns: 1fr 24px 1fr;
+  }
+  .turut-side { padding: 0 8px; }
+}
