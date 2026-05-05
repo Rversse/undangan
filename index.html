@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<!-- GATE -->
+<!-- ═══════════════════════════════ GATE ═══════════════════════════════ -->
 <div id="gate">
   <svg class="ornament" viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <line x1="0" y1="12" x2="42" y2="12" stroke="#14919B" stroke-width="0.5"/>
@@ -21,125 +21,164 @@
     <circle cx="46" cy="12" r="2" fill="#14919B" opacity="0.5"/>
     <circle cx="74" cy="12" r="2" fill="#14919B" opacity="0.5"/>
   </svg>
-
-  <!-- Nama tamu dari URL — disembunyikan jika URL tidak ada ?to= -->
   <p class="gate-to" id="gate-to" style="display:none;">Kepada Yth.</p>
   <p class="gate-name" id="gate-name" style="display:none;"></p>
-
   <h2>Pernikahan<br/><em>Taufik &amp; Ati</em></h2>
   <p class="gate-date">Minggu, 14 Juni 2026</p>
   <button id="openBtn" onclick="openInvite()">Buka Undangan</button>
 </div>
 
-<!-- HERO -->
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
 <section id="hero">
+
   <p class="hero-tag fade-up">Bismillahirrahmanirrahim</p>
   <div class="divider fade-up"></div>
 
-  <!-- TURUT MENGUNDANG -->
-  <div class="turut-wrap fade-up">
-    <p class="turut-label">Turut Mengundang</p>
-    <div class="turut-grid">
+  <p class="hero-sub fade-up">
+    Dengan memohon ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i
+    untuk hadir dan memberikan doa restu pada pernikahan putra-putri kami.
+  </p>
+
+  <div class="gold-line fade-up"></div>
+
+  <!-- Mempelai Pria -->
+  <div class="couple-block fade-up">
+    <div class="hero-names"><em>Taufik Hidayat</em></div>
+    <p class="silsilah">
+      Putra Keempat dari<br/>
+      <span class="silsilah-parents">Bapak H. Amir <em class="alm">(Alm.)</em> &amp; Ibu Hj. Suminar</span>
+    </p>
+  </div>
+
+  <div class="amp-wrap fade-up">
+    <div class="amp-line"></div>
+    <span class="hero-amp">&amp;</span>
+    <div class="amp-line"></div>
+  </div>
+
+  <!-- Mempelai Wanita -->
+  <div class="couple-block fade-up">
+    <div class="hero-names"><em>Ati Suparti, S.E.</em></div>
+    <p class="silsilah">
+      Putri Kedelapan dari<br/>
+      <!-- TODO: ganti nama orang tua mempelai wanita -->
+      <span class="silsilah-parents silsilah-placeholder">Bapak H. _________________ <em class="alm">(Alm.)</em> &amp; Ibu Hj. _________________ <em class="alm">(Alm.)</em></span>
+    </p>
+  </div>
+
+  <div class="gold-line fade-up"></div>
+  <p class="hero-date fade-up">14 · 06 · 2026</p>
+
+</section>
+
+
+<!-- ══════════════════════════ TURUT MENGUNDANG ══════════════════════════ -->
+<div id="turut">
+  <div class="turut-inner">
+
+    <p class="section-tag fade-up">Turut Mengundang</p>
+
+    <div class="turut-grid fade-up">
 
       <!-- KIRI: Keluarga Mempelai Pria -->
-      <div class="turut-side">
+      <div class="turut-col">
         <p class="turut-family-tag">Keluarga Mempelai Pria</p>
-        <p class="turut-parents">(Alm) H. Amir<br/><span class="turut-amp">&</span> Hj. Suminar</p>
-        <div class="turut-line"></div>
-        <p class="turut-child">Taufik Hidayat</p>
-        <p class="turut-child-sub">Putra</p>
+        <ul class="turut-list">
+          <li class="turut-head">H. Amir <em class="alm">(Alm.)</em> &amp; Hj. Suminar</li>
+          <li class="turut-head-sub">Orang Tua</li>
+          <li class="turut-sep"></li>
+          <!-- ── Hapus / isi baris berikut sesuai nama anggota keluarga ── -->
+          <li class="ph">———————————————</li>
+          <li class="ph">———————————————</li>
+          <li class="ph">———————————————</li>
+          <li class="ph">———————————————</li>
+          <li class="ph">———————————————</li>
+          <!-- ────────────────────────────────────────────────────────── -->
+        </ul>
       </div>
 
-      <div class="turut-divider">
-        <svg viewBox="0 0 24 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="80">
-          <line x1="12" y1="0" x2="12" y2="30" stroke="#C8A96E" stroke-width="0.5"/>
-          <circle cx="12" cy="40" r="4" stroke="#C8A96E" stroke-width="0.5" fill="none"/>
-          <circle cx="12" cy="40" r="1.5" fill="#C8A96E"/>
-          <line x1="12" y1="50" x2="12" y2="80" stroke="#C8A96E" stroke-width="0.5"/>
+      <!-- TENGAH: Ornamen pembatas -->
+      <div class="turut-divider-col" aria-hidden="true">
+        <svg viewBox="0 0 24 180" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="180">
+          <line x1="12" y1="0" x2="12" y2="72" stroke="#C8A96E" stroke-width="0.5"/>
+          <circle cx="12" cy="90" r="7" stroke="#C8A96E" stroke-width="0.5" fill="none"/>
+          <circle cx="12" cy="90" r="3" fill="#C8A96E"/>
+          <line x1="12" y1="108" x2="12" y2="180" stroke="#C8A96E" stroke-width="0.5"/>
         </svg>
       </div>
 
       <!-- KANAN: Keluarga Mempelai Wanita -->
-      <div class="turut-side">
+      <div class="turut-col">
         <p class="turut-family-tag">Keluarga Mempelai Wanita</p>
-        <!-- TODO: ganti nama orang tua mempelai wanita -->
-        <p class="turut-parents turut-placeholder">Bapak [_____________]<br/><span class="turut-amp">&</span> Ibu [_____________]</p>
-        <div class="turut-line"></div>
-        <p class="turut-child">Ati Suparti, S.E.</p>
-        <p class="turut-child-sub">Putri</p>
+        <ul class="turut-list">
+          <!-- TODO: isi nama orang tua mempelai wanita -->
+          <li class="turut-head turut-placeholder">H. _________________ <em class="alm">(Alm.)</em> &amp; Hj. _________________</li>
+          <li class="turut-head-sub">Orang Tua</li>
+          <li class="turut-sep"></li>
+          <!-- ── Hapus / isi baris berikut sesuai nama anggota keluarga ── -->
+          <li class="ph">———————————————</li>
+          <li class="ph">———————————————</li>
+          <li class="ph">———————————————</li>
+          <li class="ph">———————————————</li>
+          <li class="ph">———————————————</li>
+          <!-- ────────────────────────────────────────────────────────── -->
+        </ul>
       </div>
 
     </div>
   </div>
-  <!-- /TURUT MENGUNDANG -->
-
-  <div class="gold-line fade-up"></div>
-  <div class="fade-up">
-    <div class="hero-names"><em>Taufik Hidayat</em></div>
-    <span class="hero-amp">&amp;</span>
-    <div class="hero-names"><em>Ati Suparti, S.E.</em></div>
-  </div>
-  <div class="gold-line fade-up"></div>
-  <p class="hero-date fade-up">14 · 06 · 2026</p>
-  <p class="section-body fade-up" style="max-width:420px; margin: 20px auto 0;">
-    Dengan memohon ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu.
-  </p>
-</section>
-
-<!-- COUNTDOWN -->
-<div id="countdown">
-  <div class="inner">
-    <p class="section-tag fade-up">Menuju Hari Bahagia</p>
-    <h2 class="section-title fade-up"><em>Hitung Mundur</em></h2>
-    <div class="countdown-grid">
-      <div class="cd-block fade-up"><span class="cd-num" id="cd-days">00</span><span class="cd-label">Hari</span></div>
-      <div class="cd-block fade-up"><span class="cd-num" id="cd-hours">00</span><span class="cd-label">Jam</span></div>
-      <div class="cd-block fade-up"><span class="cd-num" id="cd-mins">00</span><span class="cd-label">Menit</span></div>
-      <div class="cd-block fade-up"><span class="cd-num" id="cd-secs">00</span><span class="cd-label">Detik</span></div>
-    </div>
-  </div>
 </div>
 
-<!-- ACARA -->
-<section>
+
+<!-- ═════════════════════════ RANGKAIAN ACARA ═════════════════════════ -->
+<section id="acara">
   <p class="section-tag fade-up">Rangkaian Acara</p>
   <h2 class="section-title fade-up">Turut <em>Hadir</em></h2>
+
   <div class="event-grid">
     <div class="event-card fade-up">
       <h3>Akad Nikah</h3>
       <p>Minggu, 14 Juni 2026</p>
-      <p>Kediaman Mempelai Pria<br/><!-- ALAMAT: ganti baris ini -->[Alamat Rumah, Desa, Kecamatan]</p>
+      <p>Kediaman Mempelai Pria<br/><!-- TODO: ganti alamat -->[Alamat Rumah, Desa, Kecamatan]</p>
       <span class="time">08.00 – 10.00 WIB</span>
     </div>
     <div class="event-card fade-up">
       <h3>Resepsi</h3>
       <p>Minggu, 14 Juni 2026</p>
-      <p>Kediaman Mempelai Pria<br/><!-- ALAMAT: ganti baris ini -->[Alamat Rumah, Desa, Kecamatan]</p>
+      <p>Kediaman Mempelai Pria<br/><!-- TODO: ganti alamat -->[Alamat Rumah, Desa, Kecamatan]</p>
       <span class="time">11.00 – 15.00 WIB</span>
     </div>
   </div>
 
-  <!-- Tombol simpan ke Google Calendar -->
   <button class="btn-calendar fade-up" onclick="openCalendar()">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+      <rect x="3" y="4" width="18" height="18" rx="2"/>
+      <line x1="16" y1="2" x2="16" y2="6"/>
+      <line x1="8" y1="2" x2="8" y2="6"/>
+      <line x1="3" y1="10" x2="21" y2="10"/>
     </svg>
     Simpan ke Google Calendar
   </button>
 </section>
 
-<!-- MAPS -->
+
+<!-- ══════════════════════════════ LOKASI ══════════════════════════════ -->
 <div id="maps">
-  <div class="inner">
+  <div class="maps-inner">
     <p class="section-tag fade-up">Lokasi</p>
     <h2 class="section-title fade-up">Temukan <em>Kami</em></h2>
   </div>
   <div class="map-wrapper fade-up">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d803.3320581401603!2d107.18816345753677!3d-6.90571025175371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNsKwNTQnMjAuMSJTIDEwN8KwMTEnMTcuNCJF!5e1!3m2!1sen!2sid!4v1776573681513!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d803.3320581401603!2d107.18816345753677!3d-6.90571025175371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNsKwNTQnMjAuMSJTIDEwN8KwMTEnMTcuNCJF!5e1!3m2!1sen!2sid!4v1776573681513!5m2!1sen!2sid"
+      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
   </div>
 </div>
 
-<!-- RSVP -->
+
+<!-- ════════════════════════════════ RSVP ════════════════════════════════ -->
 <div id="rsvp">
   <div class="inner">
     <p class="section-tag fade-up">Konfirmasi Kehadiran</p>
@@ -178,13 +217,30 @@
       </div>
       <button type="submit" class="btn-submit">Kirim Konfirmasi</button>
     </form>
+
     <div class="rsvp-success" id="rsvpSuccess">
       Terima kasih atas konfirmasi dan doa tulus Anda 🤍
     </div>
   </div>
 </div>
 
-<!-- FOOTER -->
+
+<!-- ══════════════════════════════ COUNTDOWN ══════════════════════════════ -->
+<div id="countdown">
+  <div class="inner">
+    <p class="section-tag fade-up">Menuju Hari Bahagia</p>
+    <h2 class="section-title fade-up"><em>Hitung Mundur</em></h2>
+    <div class="countdown-grid">
+      <div class="cd-block fade-up"><span class="cd-num" id="cd-days">00</span><span class="cd-label">Hari</span></div>
+      <div class="cd-block fade-up"><span class="cd-num" id="cd-hours">00</span><span class="cd-label">Jam</span></div>
+      <div class="cd-block fade-up"><span class="cd-num" id="cd-mins">00</span><span class="cd-label">Menit</span></div>
+      <div class="cd-block fade-up"><span class="cd-num" id="cd-secs">00</span><span class="cd-label">Detik</span></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════ FOOTER ══════════════════════════════ -->
 <footer>
   <svg class="ornament ornament-sm" viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <line x1="0" y1="12" x2="42" y2="12" stroke="#14919B" stroke-width="0.5"/>
@@ -194,7 +250,7 @@
     <circle cx="46" cy="12" r="2" fill="#14919B" opacity="0.5"/>
     <circle cx="74" cy="12" r="2" fill="#14919B" opacity="0.5"/>
   </svg>
-  <div class="names" style="margin-top: 28px;">Taufik &amp; Ati</div>
+  <div class="names" style="margin-top:28px;">Taufik &amp; Ati</div>
   <p class="footer-date">14 · 06 · 2026 — Cianjur</p>
   <p class="footer-credit">Dibuat dengan pusing ✦</p>
 </footer>
