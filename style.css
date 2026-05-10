@@ -211,14 +211,92 @@ section {
 
 /* ─── MAPS ─── */
 #maps { background: var(--cream); padding: 0; }
-.maps-inner { max-width: 680px; margin: 0 auto; text-align: center; padding: 100px 24px 60px; }
-.map-wrapper { width: 100%; max-width: 780px; margin: 0 auto; border: 1px solid var(--teal-light); overflow: hidden; position: relative; }
-.map-wrapper::after {
+.maps-inner { max-width: 680px; margin: 0 auto; text-align: center; padding: 100px 24px 80px; }
+
+.btn-maps {
+  display: inline-flex; align-items: center; gap: 9px;
+  margin-top: 36px; padding: 14px 36px;
+  background: transparent;
+  border: 1px solid var(--teal);
+  color: var(--teal-dark);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+  position: relative;
+}
+.btn-maps::after {
   content: ''; position: absolute;
-  top: 10px; left: 10px; right: -10px; bottom: -10px;
+  top: 6px; left: 6px; right: -6px; bottom: -6px;
   border: 1px solid rgba(20,145,155,0.2); z-index: -1;
 }
-.map-wrapper iframe { width: 100%; height: 380px; display: block; border: none; }
+.btn-maps:hover { background: var(--teal); color: var(--white); border-color: var(--teal); }
+
+/* ─── ANGPAO DIGITAL ─── */
+#angpao { background: var(--white); padding: 100px 24px; }
+#angpao .inner { max-width: 560px; margin: 0 auto; text-align: center; }
+
+.angpao-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 48px;
+}
+@media (max-width: 520px) { .angpao-grid { grid-template-columns: 1fr; } }
+
+.angpao-card {
+  border: 1px solid var(--teal-light);
+  padding: 36px 24px 28px;
+  background: var(--cream);
+  text-align: center;
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.angpao-card::before {
+  content: ''; position: absolute;
+  top: 8px; left: 8px; right: -8px; bottom: -8px;
+  border: 1px solid rgba(20,145,155,0.15); z-index: -1;
+}
+
+.angpao-bank-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 4px; }
+
+.angpao-bank-icon {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Jost', sans-serif; font-size: 0.52rem; font-weight: 400;
+  letter-spacing: 0.05em; border: 1px solid;
+}
+.bri-icon  { background: rgba(0,87,166,0.08); color: #0057A6; border-color: rgba(0,87,166,0.2); }
+.dana-icon { background: rgba(20,145,155,0.08); color: var(--teal-dark); border-color: rgba(20,145,155,0.25); font-size: 0.46rem; }
+
+.angpao-bank-name {
+  font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--muted-dark);
+}
+
+.angpao-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.1rem, 3.5vw, 1.45rem);
+  font-weight: 400; color: var(--dark); letter-spacing: 0.04em;
+  line-height: 1.3;
+}
+
+.angpao-owner {
+  font-size: 0.72rem; color: var(--muted-dark); line-height: 1.6;
+  margin-bottom: 6px;
+}
+
+.btn-copy {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-top: 4px; padding: 9px 20px;
+  background: transparent; border: 1px solid var(--teal-light);
+  color: var(--muted-dark); font-family: 'Jost', sans-serif;
+  font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+.btn-copy:hover  { background: var(--teal); color: var(--white); border-color: var(--teal); }
+.btn-copy.copied { background: var(--gold); color: var(--dark); border-color: var(--gold); }
 
 /* ─── RSVP ─── */
 #rsvp { background: var(--teal-pale); padding: 100px 24px; }

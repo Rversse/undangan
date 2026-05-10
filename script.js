@@ -161,5 +161,40 @@ function handleRSVP(e) {
 }
 
 
+// ── SALIN NOMOR ANGPAO ──────────────────────────────────────────
+function copyNumber(elementId, btn) {
+  const text = document.getElementById(elementId)?.textContent?.trim();
+  if (!text) return;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const span = btn.querySelector('span');
+    const originalText = span.textContent;
+    span.textContent = 'Tersalin! ✓';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      span.textContent = originalText;
+      btn.classList.remove('copied');
+    }, 2200);
+  }).catch(() => {
+    // Fallback untuk browser lama
+    const el = document.createElement('textarea');
+    el.value = text;
+    el.style.cssText = 'position:fixed;top:-9999px;left:-9999px;';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    const span = btn.querySelector('span');
+    const originalText = span.textContent;
+    span.textContent = 'Tersalin! ✓';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      span.textContent = originalText;
+      btn.classList.remove('copied');
+    }, 2200);
+  });
+}
+
+
 // ── INIT ────────────────────────────────────────────────────────
 applyGuestName();
