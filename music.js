@@ -5,10 +5,10 @@
 const MUSIC_CONFIG = {
   // Ganti dengan YouTube video ID (bagian setelah ?v= di URL YouTube)
   // Contoh: https://www.youtube.com/watch?v=dQw4w9WgXcQ → videoId: "dQw4w9WgXcQ"
-  videoId: "LpDLLSHIxiA",
+  videoId: "EngPsM8VnzM",
 
   // Mulai dari detik ke berapa (misal 30 = mulai dari 0:30)
-  startSeconds: 0,
+  startSeconds: 125,
 
   // Volume 0–100
   volume: 50,
