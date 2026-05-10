@@ -1,33 +1,25 @@
 // ════════════════════════════════════════════════════════════════
-//  BACKGROUND MUSIC CONFIG  ← edit bagian ini sesuai kebutuhan
+//  BACKGROUND MUSIC CONFIG
 // ════════════════════════════════════════════════════════════════
 
 const MUSIC_CONFIG = {
-  // Ganti dengan YouTube video ID (bagian setelah ?v= di URL YouTube)
-  // Contoh: https://www.youtube.com/watch?v=dQw4w9WgXcQ → videoId: "dQw4w9WgXcQ"
-  videoId: "tX73H2FRcK8",
-
-  // Mulai dari detik ke berapa (misal 30 = mulai dari 0:30)
-  startSeconds: 125,
-
-  // Volume 0–100
-  volume: 50,
-
-  // Ulangi terus-menerus?
-  loop: true,
+  videoId:      "tX73H2FRcK8",
+  startSeconds: 0,
+  volume:       50,
+  loop:         true,
 };
 
 // ════════════════════════════════════════════════════════════════
-//  MUSIC PLAYER  — tidak perlu diubah di bawah ini
+//  MUSIC PLAYER
 // ════════════════════════════════════════════════════════════════
 
 const MusicPlayer = (() => {
-  let player     = null;
-  let ready      = false;
-  let pendingPlay = false;   // true jika play dipanggil sebelum API siap
-  let muted      = false;
+  let player      = null;
+  let ready       = false;
+  let pendingPlay = false;
+  let muted       = false;
+  let playing     = false;
 
-  // ── Inject YouTube IFrame API script ──────────────────────────
   function _loadAPI() {
     if (document.getElementById('yt-api-script')) return;
     const tag = document.createElement('script');
@@ -36,7 +28,6 @@ const MusicPlayer = (() => {
     document.head.appendChild(tag);
   }
 
-  // ── Buat hidden iframe container ──────────────────────────────
   function _createContainer() {
     if (document.getElementById('yt-player-wrap')) return;
     const wrap = document.createElement('div');
@@ -47,56 +38,46 @@ const MusicPlayer = (() => {
     document.body.appendChild(wrap);
   }
 
-  // ── Callback dari YouTube IFrame API ──────────────────────────
   window.onYouTubeIframeAPIReady = function () {
     player = new YT.Player('yt-player', {
-      height: '1',
-      width:  '1',
+      height: '1', width: '1',
       videoId: MUSIC_CONFIG.videoId,
       playerVars: {
-        autoplay:       0,
-        controls:       0,
-        loop:           MUSIC_CONFIG.loop ? 1 : 0,
-        playlist:       MUSIC_CONFIG.loop ? MUSIC_CONFIG.videoId : '',
-        start:          MUSIC_CONFIG.startSeconds,
-        enablejsapi:    1,
-        origin:         window.location.origin,
-        rel:            0,
-        modestbranding: 1,
-        playsinline:    1,
+        autoplay: 0, controls: 0,
+        loop:     MUSIC_CONFIG.loop ? 1 : 0,
+        playlist: MUSIC_CONFIG.loop ? MUSIC_CONFIG.videoId : '',
+        start:    MUSIC_CONFIG.startSeconds,
+        enablejsapi: 1, origin: window.location.origin,
+        rel: 0, modestbranding: 1, playsinline: 1,
       },
       events: {
         onReady: (e) => {
           ready = true;
           e.target.setVolume(MUSIC_CONFIG.volume);
-          if (pendingPlay) {
-            e.target.playVideo();
-            pendingPlay = false;
-          }
+          if (pendingPlay) { _doPlay(); pendingPlay = false; }
         },
-        onError: (e) => {
-          console.warn('[MusicPlayer] YouTube error code:', e.data);
-        },
+        onError: (e) => console.warn('[MusicPlayer] error:', e.data),
       },
     });
   };
 
-  // ── Public API ────────────────────────────────────────────────
-  function init() {
-    _createContainer();
-    _loadAPI();
+  // Always seek to start before playing — fixes "resume from middle" bug
+  function _doPlay() {
+    player.seekTo(MUSIC_CONFIG.startSeconds, true);
+    player.playVideo();
+    playing = true;
   }
 
+  function init()  { _createContainer(); _loadAPI(); }
+
   function play() {
-    if (!ready) {
-      pendingPlay = true;    // mainkan begitu siap
-      return;
-    }
-    player?.playVideo();
+    if (!ready) { pendingPlay = true; return; }
+    _doPlay();
   }
 
   function pause() {
     player?.pauseVideo();
+    playing = false;
   }
 
   function toggleMute() {
@@ -106,32 +87,28 @@ const MusicPlayer = (() => {
     _updateBtn();
   }
 
+  function isPlaying() { return playing; }
+
   function _updateBtn() {
-    const icon  = document.getElementById('music-icon');
-    const label = document.getElementById('music-label');
-    if (!icon || !label) return;
-    if (muted) {
-      icon.innerHTML  = ICONS.muted;
-      label.textContent = 'Musik Off';
-    } else {
-      icon.innerHTML  = ICONS.playing;
-      label.textContent = 'Musik On';
-    }
+    const btn = document.getElementById('music-btn');
+    if (!btn) return;
+    btn.setAttribute('aria-label', muted ? 'Aktifkan musik' : 'Matikan musik');
+    btn.innerHTML = muted ? ICONS.muted : ICONS.playing;
   }
 
-  return { init, play, pause, toggleMute };
+  return { init, play, pause, toggleMute, isPlaying };
 })();
 
 
-// ── SVG Icons ─────────────────────────────────────────────────
+// ── Icons (icon-only, no text) ─────────────────────────────────
 const ICONS = {
-  playing: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+  playing: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"
     stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
     <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
     <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
     <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
   </svg>`,
-  muted: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+  muted: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"
     stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
     <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
     <line x1="23" y1="9" x2="17" y2="15"/>
@@ -140,18 +117,12 @@ const ICONS = {
 };
 
 
-// ── Floating Music Button ──────────────────────────────────────
+// ── Floating music button (icon only) ─────────────────────────
 function _injectMusicBtn() {
   const btn = document.createElement('button');
   btn.id = 'music-btn';
-  btn.setAttribute('aria-label', 'Toggle musik');
-  btn.innerHTML = `
-    <span id="music-icon">${ICONS.playing}</span>
-    <span id="music-label">Musik On</span>
-    <span class="music-waves" aria-hidden="true">
-      <span></span><span></span><span></span>
-    </span>
-  `;
+  btn.setAttribute('aria-label', 'Matikan musik');
+  btn.innerHTML = ICONS.playing;
   btn.onclick = () => MusicPlayer.toggleMute();
   document.body.appendChild(btn);
 }
@@ -159,68 +130,43 @@ function _injectMusicBtn() {
 function _injectMusicStyles() {
   const style = document.createElement('style');
   style.textContent = `
-    /* ── Floating music button ── */
     #music-btn {
       position: fixed;
-      bottom: 24px;
-      right: 20px;
+      bottom: 20px;
+      right: 16px;
       z-index: 999;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 8px 14px 8px 12px;
-      background: rgba(125, 46, 62, 0.15);
+      justify-content: center;
+      background: rgba(125, 46, 62, 0.18);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(200, 169, 110, 0.35);
-      border-radius: 40px;
+      border-radius: 50%;
       color: #C8A96E;
-      font-family: 'Jost', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 300;
-      letter-spacing: 0.08em;
       cursor: pointer;
       transition: background 0.3s, transform 0.2s;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 3px 14px rgba(0,0,0,0.22);
+      -webkit-tap-highlight-color: transparent;
     }
-    #music-btn:hover {
-      background: rgba(125, 46, 62, 0.28);
-      transform: translateY(-2px);
-    }
-    #music-btn:active { transform: scale(0.96); }
-
-    /* Wave bars animation */
-    .music-waves {
-      display: flex;
-      align-items: flex-end;
-      gap: 2px;
-      height: 14px;
-    }
-    .music-waves span {
-      display: block;
-      width: 2.5px;
-      border-radius: 2px;
-      background: #C8A96E;
-      animation: wave 0.9s ease-in-out infinite;
-    }
-    .music-waves span:nth-child(1) { height: 6px;  animation-delay: 0s;    }
-    .music-waves span:nth-child(2) { height: 12px; animation-delay: 0.15s; }
-    .music-waves span:nth-child(3) { height: 8px;  animation-delay: 0.3s;  }
-
-    @keyframes wave {
-      0%, 100% { transform: scaleY(1);   opacity: 1;   }
-      50%       { transform: scaleY(0.3); opacity: 0.5; }
-    }
-
-    /* Sembunyikan wave saat muted */
-    #music-btn.muted .music-waves span { animation: none; transform: scaleY(0.25); opacity: 0.3; }
+    #music-btn:hover { background: rgba(125, 46, 62, 0.32); transform: scale(1.08); }
+    #music-btn:active { transform: scale(0.94); }
   `;
   document.head.appendChild(style);
 }
 
 
-// ── Override openInvite agar musik mulai saat undangan dibuka ──
-//    (browser policy: audio hanya bisa play setelah user interaction)
+// ── Pause when tab loses focus, don't auto-resume ─────────────
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && MusicPlayer.isPlaying()) {
+    MusicPlayer.pause();
+  }
+});
+
+
+// ── Start music when gate is opened ───────────────────────────
 const _origOpenInvite = window.openInvite;
 window.openInvite = function () {
   if (typeof _origOpenInvite === 'function') _origOpenInvite();

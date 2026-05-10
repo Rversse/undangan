@@ -2,18 +2,16 @@
 const WEDDING_DATE    = new Date('2026-06-14T08:00:00+07:00');
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbys1yuhE6p1IbJI2AGIU84mCBTVmvjG9jSfq-t3L3eHXy-YvxZRMiJF72LZvcFPbsiEVg/exec";
 
-// Detail acara untuk tombol kalender
 const CALENDAR_EVENT = {
-  title: "Pernikahan Taufik & Ati",
-  start: "20260614T080000",   // format: YYYYMMDDTHHmmss
-  end:   "20260614T150000",
-  location: "Masjid Al-Hasanah, Kp. Bunder, Desa Cibaregbeg, Cianjur",
-  details: "Akad Nikah 08.00-10.00 WIB | Resepsi 11.00-15.00 WIB",
+  title:    "Pernikahan Taufik & Ati",
+  start:    "20260614T080000",
+  end:      "20260614T150000",
+  location: "Kp. Bunder, Desa Cibaregbeg, Cianjur",
+  details:  "Akad Nikah 08.00-10.00 WIB | Resepsi 11.00-15.00 WIB",
 };
 
 
 // ── NAMA TAMU DARI URL ──────────────────────────────────────────
-// Pemakaian: rversse.github.io/undangan/?to=Pak+Budi
 function getGuestName() {
   const params = new URLSearchParams(window.location.search);
   return params.get('to') || '';
@@ -69,13 +67,13 @@ function triggerFades() {
         observer.unobserve(e.target);
       }
     });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.1 });
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 }
 
 
-// ── TOMBOL SIMPAN KALENDER ──────────────────────────────────────
+// ── GOOGLE CALENDAR ─────────────────────────────────────────────
 function openCalendar() {
   const e = CALENDAR_EVENT;
   const url = `https://calendar.google.com/calendar/render?action=TEMPLATE`
@@ -87,9 +85,50 @@ function openCalendar() {
 }
 
 
+// ── WEDDING GIFT TOGGLE ─────────────────────────────────────────
+function toggleGift() {
+  const panel   = document.getElementById('giftPanel');
+  const chevron = document.getElementById('giftChevron');
+  const isOpen  = panel.classList.contains('open');
+
+  panel.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+
+
+// ── SALIN NOMOR ─────────────────────────────────────────────────
+function copyNumber(elementId, btn) {
+  const text = document.getElementById(elementId)?.textContent?.trim();
+  if (!text) return;
+
+  const _confirm = () => {
+    const span = btn.querySelector('span');
+    const orig = span.textContent;
+    span.textContent = 'Tersalin ✓';
+    btn.classList.add('copied');
+    setTimeout(() => { span.textContent = orig; btn.classList.remove('copied'); }, 2200);
+  };
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(_confirm).catch(() => _fallback());
+  } else {
+    _fallback();
+  }
+
+  function _fallback() {
+    const el = document.createElement('textarea');
+    el.value = text;
+    el.style.cssText = 'position:fixed;top:-9999px;left:-9999px;';
+    document.body.appendChild(el);
+    el.select(); document.execCommand('copy');
+    document.body.removeChild(el);
+    _confirm();
+  }
+}
+
+
 // ── RSVP ────────────────────────────────────────────────────────
 class RsvpManager {
-
   static _collectFormData() {
     return {
       nama:   document.getElementById('name')?.value?.trim()    || '',
@@ -108,8 +147,8 @@ class RsvpManager {
   static _setLoading(loading) {
     const btn = document.querySelector('.btn-submit');
     if (!btn) return;
-    btn.disabled      = loading;
-    btn.textContent   = loading ? 'Mengirim...' : 'Kirim Konfirmasi';
+    btn.disabled    = loading;
+    btn.textContent = loading ? 'Mengirim...' : 'Kirim Konfirmasi';
     btn.style.opacity = loading ? '0.6' : '1';
   }
 
@@ -125,18 +164,17 @@ class RsvpManager {
     if (!el) {
       el = document.createElement('p');
       el.id = 'rsvp-error';
-      el.style.cssText = 'margin-top:12px;color:#c0392b;font-size:0.85rem;text-align:center;';
+      el.style.cssText = 'margin-top:12px;color:#E87B8A;font-size:0.83rem;text-align:center;';
       document.getElementById('rsvpForm')?.appendChild(el);
     }
-    el.textContent = '❌ ' + message;
+    el.textContent = '✗ ' + message;
   }
 
   static async submit(data) {
     await fetch(APPS_SCRIPT_URL, {
-      method:  'POST',
+      method: 'POST', mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(data),
-      mode:    'no-cors',
+      body: JSON.stringify(data),
     });
   }
 
@@ -156,61 +194,8 @@ class RsvpManager {
   }
 }
 
-function handleRSVP(e) {
-  return RsvpManager.handleSubmit(e);
-}
-
-
-// ── SALIN NOMOR ANGPAO ──────────────────────────────────────────
-function copyNumber(elementId, btn) {
-  const text = document.getElementById(elementId)?.textContent?.trim();
-  if (!text) return;
-
-  navigator.clipboard.writeText(text).then(() => {
-    const span = btn.querySelector('span');
-    const originalText = span.textContent;
-    span.textContent = 'Tersalin! ✓';
-    btn.classList.add('copied');
-    setTimeout(() => {
-      span.textContent = originalText;
-      btn.classList.remove('copied');
-    }, 2200);
-  }).catch(() => {
-    // Fallback untuk browser lama
-    const el = document.createElement('textarea');
-    el.value = text;
-    el.style.cssText = 'position:fixed;top:-9999px;left:-9999px;';
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-    const span = btn.querySelector('span');
-    const originalText = span.textContent;
-    span.textContent = 'Tersalin! ✓';
-    btn.classList.add('copied');
-    setTimeout(() => {
-      span.textContent = originalText;
-      btn.classList.remove('copied');
-    }, 2200);
-  });
-}
-
-
-// ── QR CODE ─────────────────────────────────────────────────────
-function generateQR() {
-  const opts = {
-    width:        148,
-    height:       148,
-    colorDark:    '#2D0F18',
-    colorLight:   '#FAF7F2',
-    correctLevel: QRCode.CorrectLevel.H,
-  };
-
-  new QRCode(document.getElementById('qr-bri'),  { ...opts, text: '407701030044506' });
-  new QRCode(document.getElementById('qr-dana'), { ...opts, text: '085794323042' });
-}
+function handleRSVP(e) { return RsvpManager.handleSubmit(e); }
 
 
 // ── INIT ────────────────────────────────────────────────────────
 applyGuestName();
-generateQR();
