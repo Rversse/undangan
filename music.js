@@ -8,7 +8,7 @@ const MUSIC_CONFIG = {
   videoId: "tX73H2FRcK8",
 
   // Mulai dari detik ke berapa (misal 30 = mulai dari 0:30)
-  startSeconds: 0,
+  startSeconds: 125,
 
   // Volume 0–100
   volume: 50,
@@ -169,7 +169,7 @@ function _injectMusicStyles() {
       align-items: center;
       gap: 6px;
       padding: 8px 14px 8px 12px;
-      background: rgba(20, 145, 155, 0.15);
+      background: rgba(125, 46, 62, 0.15);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(200, 169, 110, 0.35);
@@ -184,7 +184,7 @@ function _injectMusicStyles() {
       box-shadow: 0 4px 20px rgba(0,0,0,0.25);
     }
     #music-btn:hover {
-      background: rgba(20, 145, 155, 0.28);
+      background: rgba(125, 46, 62, 0.28);
       transform: translateY(-2px);
     }
     #music-btn:active { transform: scale(0.96); }
