@@ -261,14 +261,11 @@ section {
 
 .angpao-bank-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 4px; }
 
-.angpao-bank-icon {
-  width: 44px; height: 44px; border-radius: 50%;
+.angpao-bank-logo {
+  width: 88px; height: 34px;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Jost', sans-serif; font-size: 0.52rem; font-weight: 400;
-  letter-spacing: 0.05em; border: 1px solid;
 }
-.bri-icon  { background: rgba(0,87,166,0.08); color: #0057A6; border-color: rgba(0,87,166,0.2); }
-.dana-icon { background: rgba(20,145,155,0.08); color: var(--teal-dark); border-color: rgba(20,145,155,0.25); font-size: 0.46rem; }
+.angpao-bank-logo svg { width: 88px; height: 34px; display: block; }
 
 .angpao-bank-name {
   font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase;
@@ -340,7 +337,7 @@ section {
 }
 
 /* ─── COUNTDOWN ─── */
-#countdown { background: var(--dark); padding: 80px 24px; }
+#countdown { background: var(--dark); padding: 80px 24px 28px; }
 #countdown .inner { max-width: 680px; margin: 0 auto; text-align: center; }
 #countdown .section-tag   { color: var(--teal-light); }
 #countdown .section-title { color: var(--cream); }
@@ -356,7 +353,7 @@ section {
 .cd-label { font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal-light); }
 
 /* ─── FOOTER ─── */
-footer { background: var(--dark); text-align: center; padding: 60px 24px; }
+footer { background: var(--dark); text-align: center; padding: 32px 24px 60px; }
 footer .names       { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 5vw, 2.2rem); font-weight: 300; font-style: italic; color: var(--gold); }
 footer .footer-date { margin-top: 16px; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); }
 footer .footer-credit { margin-top: 8px; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(168,218,220,0.45); }

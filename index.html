@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 </head>
 <body>
 
@@ -200,7 +201,19 @@
       <!-- BRI -->
       <div class="angpao-card">
         <div class="angpao-bank-wrap">
-          <div class="angpao-bank-icon bri-icon">BRI</div>
+          <div class="angpao-bank-logo">
+            <svg viewBox="0 0 88 34" xmlns="http://www.w3.org/2000/svg" aria-label="Bank BRI">
+              <rect width="88" height="34" rx="5" fill="#003087"/>
+              <!-- Tiga garis dinamis khas BRI -->
+              <rect x="8" y="10" width="3" height="14" rx="1.5" fill="#F7941D" opacity="0.9"/>
+              <rect x="14" y="7"  width="3" height="20" rx="1.5" fill="#F7941D" opacity="0.7"/>
+              <rect x="20" y="12" width="3" height="10" rx="1.5" fill="#F7941D" opacity="0.5"/>
+              <!-- BRI text -->
+              <text x="52" y="23" text-anchor="middle" fill="#FFFFFF"
+                font-family="Arial Black, Arial, sans-serif"
+                font-weight="900" font-size="15" letter-spacing="2">BRI</text>
+            </svg>
+          </div>
           <span class="angpao-bank-name">Bank BRI</span>
         </div>
         <p class="angpao-number" id="bri-number">407701030044506</p>
@@ -217,7 +230,24 @@
       <!-- DANA -->
       <div class="angpao-card">
         <div class="angpao-bank-wrap">
-          <div class="angpao-bank-icon dana-icon">DANA</div>
+          <div class="angpao-bank-logo">
+            <svg viewBox="0 0 88 34" xmlns="http://www.w3.org/2000/svg" aria-label="DANA">
+              <defs>
+                <linearGradient id="danaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%"   stop-color="#1AA3E8"/>
+                  <stop offset="100%" stop-color="#0070CC"/>
+                </linearGradient>
+              </defs>
+              <rect width="88" height="34" rx="17" fill="url(#danaGrad)"/>
+              <!-- Titik dekoratif -->
+              <circle cx="10" cy="17" r="3.5" fill="rgba(255,255,255,0.25)"/>
+              <circle cx="78" cy="17" r="3.5" fill="rgba(255,255,255,0.25)"/>
+              <!-- dana text -->
+              <text x="44" y="23" text-anchor="middle" fill="#FFFFFF"
+                font-family="Arial Rounded MT Bold, Arial, sans-serif"
+                font-weight="700" font-size="14" letter-spacing="1.5">dana</text>
+            </svg>
+          </div>
           <span class="angpao-bank-name">DANA</span>
         </div>
         <p class="angpao-number" id="dana-number">085794323042</p>
