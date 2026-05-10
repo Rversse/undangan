@@ -196,5 +196,21 @@ function copyNumber(elementId, btn) {
 }
 
 
+// ── QR CODE ─────────────────────────────────────────────────────
+function generateQR() {
+  const opts = {
+    width:        148,
+    height:       148,
+    colorDark:    '#2D0F18',
+    colorLight:   '#FAF7F2',
+    correctLevel: QRCode.CorrectLevel.H,
+  };
+
+  new QRCode(document.getElementById('qr-bri'),  { ...opts, text: '407701030044506' });
+  new QRCode(document.getElementById('qr-dana'), { ...opts, text: '085794323042' });
+}
+
+
 // ── INIT ────────────────────────────────────────────────────────
 applyGuestName();
+generateQR();
