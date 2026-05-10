@@ -324,30 +324,31 @@ section {
 .rsvp-form select,
 .rsvp-form textarea {
   width: 100%; padding: 14px 18px;
-  background: var(--white); border: 1px solid var(--teal-light);
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(196,120,138,0.3);
   font-family: 'Jost', sans-serif; font-size: 0.85rem; font-weight: 300;
-  color: var(--text); outline: none; transition: border-color 0.3s;
+  color: var(--cream); outline: none; transition: border-color 0.3s;
 }
 .rsvp-form input::placeholder,
-.rsvp-form textarea::placeholder { color: var(--muted); }
+.rsvp-form textarea::placeholder { color: rgba(228,193,180,0.4); }
+.rsvp-form select option { background: var(--dark); color: var(--cream); }
 .rsvp-form input:focus,
 .rsvp-form select:focus,
-.rsvp-form textarea:focus { border-color: var(--teal); }
+.rsvp-form textarea:focus { border-color: var(--teal-light); }
 .rsvp-form select {
   appearance: none; cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A4255' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C4788A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 16px center;
 }
 .rsvp-form textarea { resize: vertical; min-height: 90px; }
 .rsvp-form label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); display: block; margin-bottom: 6px; }
 
 .btn-submit {
-  width: 100%; padding: 16px; background: var(--dark); color: var(--teal-light);
+  width: 100%; padding: 16px; background: var(--teal); color: var(--cream);
   border: none; font-family: 'Jost', sans-serif; font-size: 0.68rem;
   letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer;
   transition: background 0.3s, color 0.3s; margin-top: 8px;
 }
-.btn-submit:hover { background: var(--teal); color: var(--white); }
+.btn-submit:hover { background: var(--teal-light); color: var(--dark); }
 
 .rsvp-success {
   display: none; margin-top: 24px; padding: 20px;
