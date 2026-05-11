@@ -2,7 +2,7 @@
 //  BACKGROUND MUSIC — HTML5 Audio (MP3 via GitHub Raw)
 // ════════════════════════════════════════════════════════════════
 
-const MUSIC_SRC = "https://raw.githubusercontent.com/Rversse/undangan/refs/heads/main/bgm.mp3";
+const MUSIC_SRC = "https://raw.githubusercontent.com/Rversse/undangan/main/bgm.mp3";
 
 const MusicPlayer = (() => {
   let audio   = null;
