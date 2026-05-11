@@ -1,13 +1,13 @@
 // ── CONFIG ─────────────────────────────────────────────────────
-const WEDDING_DATE = new Date('2026-06-14T07:30:00+07:00');
+const WEDDING_DATE    = new Date('2026-06-14T07:30:00+07:00');
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbys1yuhE6p1IbJI2AGIU84mCBTVmvjG9jSfq-t3L3eHXy-YvxZRMiJF72LZvcFPbsiEVg/exec";
 
 const CALENDAR_EVENT = {
   title:    "Pernikahan Taufik & Ati",
-  start:    "20260614T080000",
+  start:    "20260614T073000",
   end:      "20260614T150000",
   location: "Kp. Bunder, Desa Cibaregbeg, Cianjur",
-  details:  "Akad Nikah 07.30-08.00 WIB | Resepsi 09.30-15.00 WIB",
+  details:  "Akad Nikah 07.30-08.00 WIB | Resepsi 09.30-Selesai WIB",
 };
 
 

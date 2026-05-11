@@ -13,12 +13,20 @@ const MusicPlayer = (() => {
     audio         = new Audio(MUSIC_SRC);
     audio.loop    = true;
     audio.volume  = 0.5;
-    audio.preload = 'none';
+    audio.preload = 'metadata';
   }
 
   function play() {
     if (!audio) return;
-    audio.play().catch(e => console.warn('[Music]', e));
+    // Beberapa mobile browser perlu load() dulu sebelum play()
+    if (audio.readyState === 0) audio.load();
+    const p = audio.play();
+    if (p !== undefined) {
+      p.catch(e => {
+        console.warn('[Music] play blocked:', e.name, e.message);
+        playing = false;
+      });
+    }
     playing = true;
   }
 
@@ -29,7 +37,8 @@ const MusicPlayer = (() => {
 
   function resume() {
     if (!audio) return;
-    audio.play().catch(e => console.warn('[Music] resume:', e));
+    const p = audio.play();
+    if (p !== undefined) p.catch(e => console.warn('[Music] resume:', e.name));
     playing = true;
   }
 

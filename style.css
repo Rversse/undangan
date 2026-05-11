@@ -297,37 +297,40 @@ body {
 .btn-copy-card:hover, .btn-copy-card:active { background: var(--teal); color: var(--white); border-color: var(--teal); }
 .btn-copy-card.copied { background: var(--gold); color: var(--dark); border-color: var(--gold); }
 
-/* ══════════════ RSVP (DARK) ══════════════ */
-#rsvp { background: var(--dark); padding: var(--sec-pad); }
+/* ══════════════ RSVP (LIGHT) ══════════════ */
+#rsvp { background: var(--cream); padding: var(--sec-pad); }
 #rsvp .inner { max-width: 500px; margin: 0 auto; text-align: center; }
-#rsvp .section-tag   { color: var(--teal-light); }
-#rsvp .section-title { color: var(--cream); }
-#rsvp .section-title em { color: var(--gold); }
-#rsvp .section-body  { color: rgba(228,193,180,0.7); }
+#rsvp .section-tag   { color: var(--teal-dark); }
+#rsvp .section-title { color: var(--dark); }
+#rsvp .section-title em { color: var(--teal); }
+#rsvp .section-body  { color: var(--muted-dark); }
 
 .rsvp-form { margin-top: 40px; display: flex; flex-direction: column; gap: 14px; text-align: left; }
 .rsvp-form input,
 .rsvp-form select,
 .rsvp-form textarea {
   width: 100%; padding: 13px 16px;
-  background: rgba(255,255,255,0.06); border: 1px solid rgba(196,120,138,0.3);
+  background: var(--white);
+  border: 1px solid rgba(125,46,62,0.16);
+  border-bottom: 1px solid rgba(125,46,62,0.3);
   font-family: 'Jost', sans-serif; font-size: 0.85rem; font-weight: 300;
-  color: var(--cream); outline: none; transition: border-color 0.3s;
+  color: var(--dark); outline: none; transition: border-color 0.3s;
   -webkit-appearance: none; border-radius: 0;
+  box-shadow: 0 1px 4px rgba(45,15,24,0.04);
 }
 .rsvp-form input::placeholder,
-.rsvp-form textarea::placeholder { color: rgba(228,193,180,0.38); }
-.rsvp-form select option { background: var(--dark); color: var(--cream); }
+.rsvp-form textarea::placeholder { color: rgba(125,46,62,0.32); }
+.rsvp-form select option { background: var(--white); color: var(--dark); }
 .rsvp-form input:focus,
 .rsvp-form select:focus,
-.rsvp-form textarea:focus { border-color: var(--teal-light); }
+.rsvp-form textarea:focus { border-color: var(--teal); }
 .rsvp-form select {
   appearance: none; cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C4788A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237D2E3E' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 14px center;
 }
 .rsvp-form textarea { resize: vertical; min-height: 90px; }
-.rsvp-form label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); display: block; margin-bottom: 6px; }
+.rsvp-form label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted-dark); display: block; margin-bottom: 6px; }
 
 .btn-submit {
   width: 100%; padding: 15px; background: var(--teal); color: var(--cream);
@@ -336,20 +339,20 @@ body {
   transition: background 0.3s; margin-top: 6px;
   -webkit-tap-highlight-color: transparent;
 }
-.btn-submit:hover, .btn-submit:active { background: var(--teal-light); color: var(--dark); }
+.btn-submit:hover, .btn-submit:active { background: var(--teal-dark); color: var(--cream); }
 
 .rsvp-success {
   display: none; margin-top: 24px; padding: 20px;
-  border: 1px solid var(--teal-light); background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(125,46,62,0.25); background: rgba(125,46,62,0.05);
   font-family: 'Cormorant Garamond', serif; font-size: 1.1rem;
-  font-style: italic; color: var(--cream); text-align: center;
+  font-style: italic; color: var(--text); text-align: center;
 }
 
-/* ══════════════ FOOTER (DARK) ══════════════ */
-footer { background: var(--dark); text-align: center; padding: 48px 20px 56px; }
-footer .names       { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 5vw, 2.2rem); font-weight: 300; font-style: italic; color: var(--gold); }
-footer .footer-date { margin-top: 14px; font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); }
-footer .footer-credit { margin-top: 8px; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(196,120,138,0.4); }
+/* ══════════════ FOOTER (LIGHT) ══════════════ */
+footer { background: var(--cream); text-align: center; padding: 48px 20px 56px; border-top: 1px solid rgba(125,46,62,0.1); }
+footer .names       { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 5vw, 2.2rem); font-weight: 300; font-style: italic; color: var(--teal-dark); }
+footer .footer-date { margin-top: 14px; font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted-dark); }
+footer .footer-credit { margin-top: 8px; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(125,46,62,0.3); }
 
 /* ══════════════════════════════════════════════════════════════
    ILLUSTRATIONS — Hero & Section Floral Accents
