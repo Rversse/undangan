@@ -7,7 +7,7 @@ const CALENDAR_EVENT = {
   start:    "20260614T080000",
   end:      "20260614T150000",
   location: "Kp. Bunder, Desa Cibaregbeg, Cianjur",
-  details:  "Akad Nikah 07.30-08.00 WIB | Resepsi 09.30-Selesai WIB",
+  details:  "Akad Nikah 07.30-08.00 WIB | Resepsi 09.30-15.00 WIB",
 };
 
 
