@@ -89,6 +89,12 @@ const MusicPlayer = (() => {
 
   function isPlaying() { return playing; }
 
+  // Resume from current position (no seek) — used when tab becomes visible again
+  function resume() {
+    if (!ready || !playing) return;
+    player?.playVideo();
+  }
+
   function _updateBtn() {
     const btn = document.getElementById('music-btn');
     if (!btn) return;
@@ -96,7 +102,7 @@ const MusicPlayer = (() => {
     btn.innerHTML = muted ? ICONS.muted : ICONS.playing;
   }
 
-  return { init, play, pause, toggleMute, isPlaying };
+  return { init, play, pause, resume, toggleMute, isPlaying };
 })();
 
 
@@ -158,10 +164,14 @@ function _injectMusicStyles() {
 }
 
 
-// ── Pause when tab loses focus, don't auto-resume ─────────────
+// ── Pause on hide, resume on show ─────────────────────────────
+let _wasPlayingBeforeHide = false;
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden && MusicPlayer.isPlaying()) {
-    MusicPlayer.pause();
+  if (document.hidden) {
+    _wasPlayingBeforeHide = MusicPlayer.isPlaying();
+    if (_wasPlayingBeforeHide) MusicPlayer.pause();
+  } else {
+    if (_wasPlayingBeforeHide) MusicPlayer.resume();
   }
 });
 
