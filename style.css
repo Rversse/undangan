@@ -469,6 +469,13 @@ footer .footer-credit { margin-top: 8px; font-size: 0.58rem; letter-spacing: 0.1
 }
 
 /* ══════════════════════════════════════════════════════════════
+   GATE — sembunyikan scrollbar saat gate masih tampil
+   ══════════════════════════════════════════════════════════════ */
+html:has(#gate:not(.hide)) {
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════════════════════
    MOBILE OVERFLOW
    ══════════════════════════════════════════════════════════════ */
 #hero, #turut, #acara, #gift, #rsvp, footer {
