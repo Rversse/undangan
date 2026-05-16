@@ -310,5 +310,42 @@ class RsvpManager {
 function handleRSVP(e) { return RsvpManager.handleSubmit(e); }
 
 
+// ── SHARE BUTTON ─────────────────────────────────────────────
+async function shareInvite() {
+  const url  = window.location.href;
+  const name = getGuestName();
+  const text = name
+    ? `Assalamu'alaikum ${name}, kami mengundang Anda hadir pada pernikahan Taufik & Ati, Minggu 14 Juni 2026 di Cianjur. 🤍`
+    : `Assalamu'alaikum, kami mengundang Anda hadir pada pernikahan Taufik & Ati, Minggu 14 Juni 2026 di Cianjur. 🤍`;
+
+  const btn      = document.getElementById('shareBtnText');
+  const origText = btn?.textContent;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: 'Pernikahan Taufik & Ati · 14 Juni 2026',
+        text,
+        url,
+      });
+    } catch (e) {
+      if (e.name !== 'AbortError') console.warn('[Share]', e);
+    }
+    return;
+  }
+
+  // Fallback: copy URL
+  try {
+    await navigator.clipboard.writeText(url);
+    if (btn) {
+      btn.textContent = 'Link tersalin ✓';
+      setTimeout(() => { btn.textContent = origText; }, 2200);
+    }
+  } catch {
+    prompt('Salin link undangan:', url);
+  }
+}
+
+
 // ── INIT ────────────────────────────────────────────────────────
 applyGuestName();
