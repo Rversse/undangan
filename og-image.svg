@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#1E0B12"/>
+
+  <!-- Outer border -->
+  <rect x="18" y="18" width="1164" height="594" fill="none" stroke="#C8A96E" stroke-width="1" opacity="0.45"/>
+  <rect x="26" y="26" width="1148" height="578" fill="none" stroke="#C8A96E" stroke-width="0.4" opacity="0.25"/>
+
+  <!-- Left botanical -->
+  <g opacity="0.65">
+    <path d="M 110,315 C 130,270 175,220 230,175" stroke="#C8A96E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <path d="M 155,248 C 148,228 130,220 126,232 C 130,244 148,246 155,248 Z" fill="#7D2E3E" opacity="0.7"/>
+    <path d="M 195,212 C 190,193 172,186 169,197 C 172,208 190,210 195,212 Z" fill="#7D2E3E" opacity="0.6"/>
+    <path d="M 110,315 C 85,290 70,255 75,230" stroke="#C8A96E" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <path d="M 88,265 C 70,258 60,244 65,236 C 72,232 84,242 88,265 Z" fill="#7D2E3E" opacity="0.55"/>
+    <g transform="translate(230,175)">
+      <ellipse cx="0" cy="-8" rx="3" ry="7" fill="#C8A96E" opacity="0.8"/>
+      <ellipse cx="0" cy="-8" rx="3" ry="7" fill="#C8A96E" opacity="0.8" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-8" rx="3" ry="7" fill="#C8A96E" opacity="0.8" transform="rotate(120)"/>
+      <ellipse cx="0" cy="-8" rx="3" ry="7" fill="#C8A96E" opacity="0.8" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-8" rx="3" ry="7" fill="#C8A96E" opacity="0.8" transform="rotate(240)"/>
+      <ellipse cx="0" cy="-8" rx="3" ry="7" fill="#C8A96E" opacity="0.8" transform="rotate(300)"/>
+      <circle r="4" fill="#C8A96E"/>
+    </g>
+  </g>
+
+  <!-- Right botanical (mirror) -->
+  <g transform="translate(1200,0) scale(-1,1)" opacity="0.65">
+    <path d="M 110,315 C 130,270 175,220 230,175" stroke="#C8A96E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <path d="M 155,248 C 148,228 130,220 126,232 C 130,244 148,246 155,248 Z" fill="#7D2E3E" opacity="0.7"/>
+    <path d="M 195,212 C 190,193 172,186 169,197 C 172,208 190,210 195,212 Z" fill="#7D2E3E" opacity="0.6"/>
+    <path d="M 110,315 C 85,290 70,255 75,230" stroke="#C8A96E" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <path d="M 88,265 C 70,258 60,244 65,236 C 72,232 84,242 88,265 Z" fill="#7D2E3E" opacity="0.55"/>
+    <g transform="translate(230,175)">
+      <ellipse cx="0" cy="-8" rx="3" ry="7" fill="#C8A96E" opacity="0.8"/>
+      <ellipse cx="0" cy="-8" rx="3" ry="7" fill="#C8A96E" opacity="0.8" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-8" rx="3" ry="7" fill="#C8A96E" opacity="0.8" transform="rotate(120)"/>
+      <ellipse cx="0" cy="-8" rx="3" ry="7" fill="#C8A96E" opacity="0.8" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-8" rx="3" ry="7" fill="#C8A96E" opacity="0.8" transform="rotate(240)"/>
+      <ellipse cx="0" cy="-8" rx="3" ry="7" fill="#C8A96E" opacity="0.8" transform="rotate(300)"/>
+      <circle r="4" fill="#C8A96E"/>
+    </g>
+  </g>
+
+  <!-- Mandala backdrop (faint) -->
+  <g transform="translate(600,315)" stroke="#C8A96E" opacity="0.06" fill="none">
+    <circle r="240" stroke-width="0.5"/>
+    <circle r="180" stroke-width="0.5"/>
+    <circle r="120" stroke-width="0.5"/>
+    <polygon points="0,-180 180,0 0,180 -180,0" stroke-width="0.4"/>
+    <polygon points="127,-127 127,127 -127,127 -127,-127" stroke-width="0.4"/>
+  </g>
+
+  <!-- Top ornament line -->
+  <line x1="480" y1="148" x2="536" y2="148" stroke="#7D2E3E" stroke-width="0.8" opacity="0.55"/>
+  <circle cx="554" cy="148" r="8" stroke="#C8A96E" stroke-width="0.8" fill="none" opacity="0.8"/>
+  <circle cx="554" cy="148" r="3.5" fill="#C8A96E" opacity="0.9"/>
+  <circle cx="572" cy="148" r="3" fill="#7D2E3E" opacity="0.45"/>
+  <line x1="590" y1="148" x2="646" y2="148" stroke="#7D2E3E" stroke-width="0.8" opacity="0.55"/>
+  <!-- Mirror right -->
+  <line x1="554" y1="148" x2="610" y2="148" stroke="#7D2E3E" stroke-width="0.8" opacity="0.55"/>
+  <circle cx="628" cy="148" r="3" fill="#7D2E3E" opacity="0.45"/>
+  <line x1="644" y1="148" x2="720" y2="148" stroke="#7D2E3E" stroke-width="0.8" opacity="0.55"/>
+
+  <!-- Bismillah text -->
+  <text x="600" y="198" text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="17" fill="#C8A96E" letter-spacing="5" opacity="0.78">
+    BISMILLAHIRRAHMANIRRAHIM
+  </text>
+
+  <!-- "The Wedding of" label -->
+  <text x="600" y="240" text-anchor="middle"
+    font-family="Georgia, serif"
+    font-size="13" fill="#EDE0D5" letter-spacing="6" opacity="0.6">
+    PERNIKAHAN
+  </text>
+
+  <!-- Names -->
+  <text x="600" y="318" text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="82" fill="#EDE0D5" font-weight="300" font-style="italic">
+    Taufik
+  </text>
+
+  <!-- Ampersand -->
+  <text x="600" y="362" text-anchor="middle"
+    font-family="Georgia, serif"
+    font-size="32" fill="#C8A96E" font-style="italic" opacity="0.9">
+    &amp;
+  </text>
+
+  <!-- Second name -->
+  <text x="600" y="432" text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="82" fill="#EDE0D5" font-weight="300" font-style="italic">
+    Ati
+  </text>
+
+  <!-- Gold divider line -->
+  <line x1="440" y1="462" x2="560" y2="462" stroke="#C8A96E" stroke-width="0.6" opacity="0.35"/>
+  <circle cx="600" cy="462" r="3.5" fill="#C8A96E" opacity="0.7"/>
+  <line x1="640" y1="462" x2="760" y2="462" stroke="#C8A96E" stroke-width="0.6" opacity="0.35"/>
+
+  <!-- Date -->
+  <text x="600" y="506" text-anchor="middle"
+    font-family="Georgia, serif"
+    font-size="22" fill="#E8D5A3" letter-spacing="5" opacity="0.88">
+    14 · 06 · 2026
+  </text>
+
+  <!-- Location -->
+  <text x="600" y="538" text-anchor="middle"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="13" fill="#C8A96E" letter-spacing="4" opacity="0.65">
+    CIANJUR, JAWA BARAT
+  </text>
+
+</svg>
