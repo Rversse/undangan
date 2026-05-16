@@ -1,6 +1,6 @@
 // ── CONFIG ─────────────────────────────────────────────────────
 const WEDDING_DATE    = new Date('2026-06-14T07:30:00+07:00');
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbys1yuhE6p1IbJI2AGIU84mCBTVmvjG9jSfq-t3L3eHXy-YvxZRMiJF72LZvcFPbsiEVg/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbys1yuhE6p1IbJI2AGIU84mCBTVmvjG9jSfq-t3L3eHXy-YvxZRMiJF72LZvcFPbsiEVg/exec"; // ✅ URL GAS lu, jangan diubah
 
 const CALENDAR_EVENT = {
   title:    "Pernikahan Taufik & Ati",
