@@ -127,12 +127,122 @@ function copyNumber(elementId, btn) {
 }
 
 
-// ── RSVP ────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
+//  MODAL UCAPAN
+// ══════════════════════════════════════════════════════════════════
+
+function openRsvpModal() {
+  const modal = document.getElementById('rsvpModal');
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  fetchUcapan();
+}
+
+function closeRsvpModal() {
+  document.getElementById('rsvpModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Tutup kalau klik area gelap di luar card
+function handleModalClick(e) {
+  if (e.target.id === 'rsvpModal') closeRsvpModal();
+}
+
+// Tutup modal dengan tombol Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeRsvpModal();
+});
+
+
+// ══════════════════════════════════════════════════════════════════
+//  UCAPAN — Fetch & Render
+// ══════════════════════════════════════════════════════════════════
+
+async function fetchUcapan() {
+  const wall    = document.getElementById('ucapanWall');
+  const loading = document.getElementById('ucapanLoading');
+
+  // Reset tampilan
+  wall.innerHTML = '<p class="ucapan-loading" id="ucapanLoading">Memuat ucapan…</p>';
+
+  try {
+    const url = APPS_SCRIPT_URL + '?action=ucapan';
+    const res  = await fetch(url, { redirect: 'follow' });
+
+    if (!res.ok) throw new Error('Fetch gagal: ' + res.status);
+
+    const data = await res.json();
+
+    if (!data.success || !Array.isArray(data.data)) {
+      throw new Error('Format data tidak valid');
+    }
+
+    renderUcapan(data.data);
+
+  } catch (err) {
+    console.warn('[Ucapan] fetch error:', err.message);
+    wall.innerHTML = '<p class="ucapan-empty">Belum ada ucapan. Jadilah yang pertama! 🤍</p>';
+  }
+}
+
+function renderUcapan(list) {
+  const wall = document.getElementById('ucapanWall');
+
+  if (!list.length) {
+    wall.innerHTML = '<p class="ucapan-empty">Belum ada ucapan. Jadilah yang pertama! 🤍</p>';
+    return;
+  }
+
+  // Filter: hanya tampilkan yang punya ucapan (bukan RSVP kosong)
+  const withUcapan = list.filter(u => u.ucapan && u.ucapan.trim());
+
+  if (!withUcapan.length) {
+    wall.innerHTML = '<p class="ucapan-empty">Belum ada ucapan. Jadilah yang pertama! 🤍</p>';
+    return;
+  }
+
+  wall.innerHTML = withUcapan.map(u => {
+    const initial   = (u.nama || '?')[0].toUpperCase();
+    const isHadir   = u.hadir === 'Hadir';
+    const badgeClass = isHadir ? 'hadir' : 'berhalangan';
+    const badgeText  = isHadir ? 'Hadir' : 'Berhalangan';
+
+    return `
+      <div class="ucapan-item">
+        <div class="ucapan-avatar">${initial}</div>
+        <div class="ucapan-body">
+          <div class="ucapan-meta">
+            <span class="ucapan-name">${_esc(u.nama)}</span>
+            <span class="ucapan-badge ${badgeClass}">${badgeText}</span>
+          </div>
+          <p class="ucapan-text">${_esc(u.ucapan)}</p>
+          ${u.waktu ? `<span class="ucapan-time">${_esc(u.waktu)}</span>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Helper: escape HTML untuk keamanan
+function _esc(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/\n/g, '<br>');
+}
+
+
+// ══════════════════════════════════════════════════════════════════
+//  RSVP — Form Handler (tanpa field WhatsApp)
+// ══════════════════════════════════════════════════════════════════
+
 class RsvpManager {
+
   static _collectFormData() {
     return {
       nama:   document.getElementById('name')?.value?.trim()    || '',
-      wa:     document.getElementById('phone')?.value?.trim()   || '',
       hadir:  document.getElementById('attendance')?.value      || '',
       jumlah: document.getElementById('guests')?.value          || '1',
       ucapan: document.getElementById('message')?.value?.trim() || '',
@@ -147,8 +257,8 @@ class RsvpManager {
   static _setLoading(loading) {
     const btn = document.querySelector('.btn-submit');
     if (!btn) return;
-    btn.disabled    = loading;
-    btn.textContent = loading ? 'Mengirim...' : 'Kirim Konfirmasi';
+    btn.disabled      = loading;
+    btn.textContent   = loading ? 'Mengirim…' : 'Kirim Ucapan';
     btn.style.opacity = loading ? '0.6' : '1';
   }
 
@@ -157,6 +267,9 @@ class RsvpManager {
     const success = document.getElementById('rsvpSuccess');
     if (form)    form.style.display    = 'none';
     if (success) success.style.display = 'block';
+
+    // Refresh ucapan wall setelah submit
+    setTimeout(() => fetchUcapan(), 1500);
   }
 
   static _showError(message) {
