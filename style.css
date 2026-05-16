@@ -1,18 +1,25 @@
 /* ══════════════ VARIABLES ══════════════ */
 :root {
-  --teal:       #7D2E3E;
-  --teal-dark:  #4A1525;
-  --teal-light: #C4788A;
-  --teal-pale:  #F5EBE8;
-  --gold:       #C8A96E;
-  --gold-light: #E8D5A3;
-  --cream:      #FAF7F2;
-  --white:      #FFFFFF;
-  --dark:       #2D0F18;
-  --text:       #2A1020;
-  --muted:      #7A4255;
-  --muted-dark: #4A2530;
-  --sec-pad:    80px 20px;
+  --maroon:      #7D2E3E;
+  --maroon-dark: #4A1525;
+  --maroon-light:#C4788A;
+  --maroon-pale: #F5EBE8;
+  --gold:        #C8A96E;
+  --gold-light:  #E8D5A3;
+  --cream:       #FAF7F2;
+  --white:       #FFFFFF;
+  --dark:        #1E0B12;   /* sedikit lebih gelap untuk depth */
+  --text:        #2A1020;
+  --muted:       #7A4255;
+  --muted-dark:  #4A2530;
+  --on-dark:     #EDE0D5;   /* ✅ BARU — text di atas background gelap */
+  --sec-pad:     80px 20px;
+
+  /* backward-compat aliases */
+  --teal:        var(--maroon);
+  --teal-dark:   var(--maroon-dark);
+  --teal-light:  var(--maroon-light);
+  --teal-pale:   var(--maroon-pale);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,8 +34,8 @@ body {
 }
 
 /* ══════════════ ORNAMENTS ══════════════ */
-.ornament     { display: block; width: 120px; margin: 0 auto; opacity: 0.55; }
-.ornament-sm  { width: 60px; }
+.ornament    { display: block; width: 120px; margin: 0 auto; opacity: 0.55; }
+.ornament-sm { width: 60px; }
 
 /* ══════════════ GATE ══════════════ */
 #gate {
@@ -40,27 +47,27 @@ body {
   transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 #gate.hide { opacity: 0; visibility: hidden; pointer-events: none; }
-#gate .gate-to   { color: var(--teal-light); font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; }
+#gate .gate-to   { color: rgba(237,218,200,0.75); font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; }
 #gate .gate-name { color: var(--gold-light); font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 4vw, 1.5rem); font-style: italic; margin-top: -6px; }
-#gate h2         { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 6vw, 2.4rem); font-weight: 300; color: var(--cream); text-align: center; line-height: 1.3; }
+#gate h2         { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 6vw, 2.4rem); font-weight: 300; color: var(--on-dark); text-align: center; line-height: 1.3; }
 #gate h2 em      { font-style: italic; color: var(--gold); }
-#gate .gate-date { color: var(--teal-light); font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; }
+#gate .gate-date { color: rgba(237,218,200,0.72); font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; }
 #openBtn {
   margin-top: 6px; padding: 14px 40px;
-  background: transparent; border: 1px solid var(--teal-light);
-  color: var(--teal-light); font-family: 'Jost', sans-serif;
+  background: transparent; border: 1px solid rgba(237,218,200,0.45);
+  color: var(--on-dark); font-family: 'Jost', sans-serif;
   font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
   cursor: pointer; transition: background 0.3s, color 0.3s;
   -webkit-tap-highlight-color: transparent;
 }
-#openBtn:hover, #openBtn:active { background: var(--teal-light); color: var(--dark); }
+#openBtn:hover, #openBtn:active { background: rgba(237,218,200,0.15); color: var(--gold-light); }
 
 /* ══════════════ HERO ══════════════ */
 #hero {
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center;
-  padding: 106px 20px 78px;  /* top/bot increased: room for botanical arch & spread */
+  padding: 106px 20px 78px;
   background: var(--cream);
   overflow: hidden; position: relative;
 }
@@ -81,21 +88,21 @@ body {
 
 .couple-block { margin: 4px 0; }
 .hero-names   { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 10vw, 5.5rem); font-weight: 300; line-height: 1.05; color: var(--dark); }
-.hero-names em { font-style: italic; color: var(--teal-dark); }
+.hero-names em { font-style: italic; color: var(--maroon-dark); }
 
 .silsilah         { margin-top: 10px; font-size: 0.82rem; line-height: 1.85; color: var(--muted-dark); }
 .silsilah-parents { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: var(--text); display: block; margin-top: 2px; }
 .alm { font-style: italic; color: var(--muted); font-size: 0.9em; }
 
-/* Override alm color on dark backgrounds for legibility */
+/* alm di section gelap */
 #turut .alm,
-#acara .alm { color: rgba(228, 193, 180, 0.75); }
+#acara .alm { color: rgba(237,218,200,0.62); }
 
 .amp-wrap { display: flex; align-items: center; gap: 20px; margin: 20px auto; width: 100%; max-width: 300px; }
 .amp-line  { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
 .hero-amp  { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 5vw, 2.4rem); font-style: italic; color: var(--gold); flex-shrink: 0; }
 
-.divider  { width: 1px; height: 48px; background: linear-gradient(to bottom, transparent, var(--teal), transparent); margin: 24px auto; }
+.divider   { width: 1px; height: 48px; background: linear-gradient(to bottom, transparent, var(--maroon), transparent); margin: 24px auto; }
 .gold-line { width: 72px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 24px auto; }
 
 /* ══════════════ FADE UP ══════════════ */
@@ -103,19 +110,21 @@ body {
 .fade-up.visible { opacity: 1; transform: none; }
 
 /* ══════════════ SECTION BASE ══════════════ */
-.section-tag   { font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--teal-dark); margin-bottom: 16px; display: block; }
+.section-tag   { font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--maroon-dark); margin-bottom: 16px; display: block; }
 .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.7rem, 6vw, 2.8rem); font-weight: 400; color: var(--dark); line-height: 1.2; }
-.section-title em { font-style: italic; color: var(--teal); }
+.section-title em { font-style: italic; color: var(--maroon); }
 .section-body  { margin-top: 16px; font-size: 0.86rem; line-height: 1.9; color: var(--muted-dark); }
 
 /* ══════════════ TURUT MENGUNDANG (DARK) ══════════════ */
-#turut { background: var(--dark); padding: var(--sec-pad); position: relative; }
+#turut {
+  background: var(--dark); padding: var(--sec-pad); position: relative;
+}
 #turut::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
   background: linear-gradient(to right, transparent 0%, rgba(200,169,110,0.5) 25%, rgba(200,169,110,0.5) 75%, transparent 100%);
 }
 .turut-inner { max-width: 620px; margin: 0 auto; text-align: center; }
-#turut .section-tag { color: var(--teal-light); }
+#turut .section-tag { color: rgba(237,218,200,0.78); }
 
 .turut-grid {
   display: grid;
@@ -125,30 +134,71 @@ body {
 .turut-col { padding: 0 12px; }
 @media (min-width: 480px) { .turut-col { padding: 0 20px; } }
 
-.turut-family-tag { font-size: 0.52rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 18px; }
-.turut-head       { font-family: 'Cormorant Garamond', serif; font-size: clamp(0.8rem, 2.5vw, 1rem); color: var(--gold-light); line-height: 1.65; list-style: none; }
-.turut-head-sub   { font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); opacity: 0.8; margin-top: 4px; list-style: none; }
-.turut-sep        { width: 28px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 14px auto; list-style: none; }
-.turut-list       { list-style: none; padding: 0; }
-.turut-list li    { margin-bottom: 6px; }
-.ph               { font-size: 0.68rem; color: var(--teal-light); opacity: 0.22; letter-spacing: 0.08em; list-style: none; line-height: 2; }
+/* ✅ Label keluarga — jauh lebih terang */
+.turut-family-tag {
+  font-size: 0.52rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(237,218,200,0.82); margin-bottom: 18px;
+}
+/* ✅ Nama utama (orang tua) — gold terang */
+.turut-head {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.85rem, 2.5vw, 1.05rem);
+  color: var(--gold-light); line-height: 1.65; list-style: none;
+  font-weight: 400;
+}
+/* ✅ Sub label "Orang Tua" */
+.turut-head-sub {
+  font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(237,218,200,0.65); margin-top: 4px; list-style: none;
+}
+.turut-sep {
+  width: 28px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 14px auto; list-style: none;
+}
+.turut-list    { list-style: none; padding: 0; }
+.turut-list li { margin-bottom: 6px; }
+
+/* ✅ PLACEHOLDER dashes — tetap samar */
+.ph {
+  font-size: 0.68rem; color: rgba(237,218,200,0.20);
+  letter-spacing: 0.08em; list-style: none; line-height: 2;
+  overflow: hidden; max-width: 100%; white-space: nowrap;
+}
+
+/* ✅ BARU — item list nama asli, jelas terbaca */
+.turut-item {
+  font-size: 0.75rem;
+  color: rgba(237,218,200,0.88);
+  letter-spacing: 0.04em;
+  list-style: none;
+  line-height: 2.1;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+}
+
 .turut-divider-col { display: flex; align-items: center; justify-content: center; padding-top: 36px; }
 
-/* ══════════════ COUNTDOWN (inside acara, dark bg) ══════════════ */
+/* ══════════════ COUNTDOWN ══════════════ */
 .cd-inner  { max-width: 600px; margin: 0 auto; text-align: center; padding-top: 4px; }
-.cd-tag    { font-size: 0.56rem; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(228,193,180,0.6); margin-bottom: 20px; display: block; }
+/* ✅ Label "Menuju Hari Bahagia" — jauh lebih terang */
+.cd-tag    {
+  font-size: 0.56rem; letter-spacing: 0.35em; text-transform: uppercase;
+  color: rgba(237,218,200,0.78); margin-bottom: 20px; display: block;
+}
 
 .countdown-grid { display: flex; gap: clamp(6px, 2vw, 10px); justify-content: center; flex-wrap: nowrap; }
 .cd-block {
-  background: rgba(0,0,0,0.38);
-  border: 1px solid rgba(200,169,110,0.18);
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(200,169,110,0.25);
   width: clamp(62px, 17vw, 82px); padding: 14px 8px;
   display: flex; flex-direction: column; align-items: center; gap: 6px;
   flex: 1; max-width: 90px;
 }
 @media (min-width: 400px) { .cd-block { padding: 16px 8px; } }
 .cd-num   { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--gold); line-height: 1; min-width: 2ch; text-align: center; }
-.cd-label { font-size: 0.5rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(200,169,110,0.55); }
+/* ✅ Label "HARI", "JAM" dll — jauh lebih terang */
+.cd-label { font-size: 0.5rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(200,169,110,0.85); }
 
 /* ══════════════ ACARA + LOKASI (DARK) ══════════════ */
 #acara {
@@ -159,62 +209,64 @@ body {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
   background: linear-gradient(to right, transparent 0%, rgba(200,169,110,0.3) 25%, rgba(200,169,110,0.3) 75%, transparent 100%);
 }
-#acara .section-tag   { color: rgba(228,193,180,0.65); }
-#acara .section-title { color: var(--cream); }
+/* ✅ Semua text di acara — cream terang */
+#acara .section-tag   { color: rgba(237,218,200,0.78); }
+#acara .section-title { color: var(--on-dark); }
 #acara .section-title em { color: var(--gold); }
-#acara .section-body  { color: rgba(228,193,180,0.72); }
+#acara .section-body  { color: rgba(237,218,200,0.82); }
 
-.event-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 40px; max-width: 600px; margin-left: auto; margin-right: auto; overflow: hidden; padding-bottom: 8px; padding-right: 8px; }
+.event-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 20px; margin-top: 40px; max-width: 600px;
+  margin-left: auto; margin-right: auto;
+  overflow: hidden; padding-bottom: 8px; padding-right: 8px;
+}
 @media (min-width: 520px) { .event-grid { grid-template-columns: 1fr 1fr; } }
 
 .event-card {
-  border: 1px solid rgba(200,169,110,0.18);
+  border: 1px solid rgba(200,169,110,0.25);
   border-radius: 12px;
   padding: 32px 22px;
   text-align: center; position: relative;
-  background: rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.06);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
-.event-card h3    { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; color: var(--cream); margin-bottom: 14px; }
-.event-card p     { font-size: 0.82rem; line-height: 1.9; color: rgba(228,193,180,0.78); }
+.event-card h3    { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; color: var(--on-dark); margin-bottom: 14px; }
+/* ✅ Text di card acara — lebih terang */
+.event-card p     { font-size: 0.82rem; line-height: 1.9; color: rgba(237,218,200,0.85); }
 .event-card .time {
   display: inline-block; margin-top: 14px;
   font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--gold-light); border-top: 1px solid rgba(200,169,110,0.22); padding-top: 10px;
+  color: var(--gold-light); border-top: 1px solid rgba(200,169,110,0.28); padding-top: 10px;
 }
 
 .btn-calendar {
   display: inline-flex; align-items: center; gap: 8px;
   margin-top: 32px; padding: 11px 24px;
-  background: transparent; border: 1px solid rgba(196,120,138,0.4);
-  color: var(--teal-light); font-family: 'Jost', sans-serif;
+  background: transparent; border: 1px solid rgba(237,218,200,0.35);
+  color: var(--on-dark); font-family: 'Jost', sans-serif;
   font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
   cursor: pointer; transition: background 0.3s, color 0.3s;
   -webkit-tap-highlight-color: transparent;
 }
-.btn-calendar:hover, .btn-calendar:active { background: var(--teal-light); color: var(--dark); }
+.btn-calendar:hover, .btn-calendar:active { background: rgba(237,218,200,0.12); }
 
-/* Lokasi inside acara */
+/* Lokasi */
 .acara-lokasi { text-align: center; }
-.lokasi-title {
-  font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 5vw, 2.2rem);
-  font-weight: 400; color: var(--cream); line-height: 1.2; margin-bottom: 10px;
-}
-.lokasi-title em { font-style: italic; color: var(--gold); }
-.lokasi-address { font-size: 0.84rem; line-height: 1.9; color: rgba(228,193,180,0.85); margin-top: 10px; margin-bottom: 28px; }
+.lokasi-address { font-size: 0.84rem; line-height: 1.9; color: rgba(237,218,200,0.9); margin-top: 10px; margin-bottom: 28px; }
 
 .btn-maps {
   display: inline-flex; align-items: center; gap: 9px;
   padding: 13px 32px;
-  background: transparent; border: 1px solid var(--teal-light);
-  color: var(--teal-light); font-family: 'Jost', sans-serif;
+  background: transparent; border: 1px solid rgba(237,218,200,0.4);
+  color: var(--on-dark); font-family: 'Jost', sans-serif;
   font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase;
   text-decoration: none;
-  cursor: pointer; transition: background 0.3s, color 0.3s;
+  cursor: pointer; transition: background 0.3s;
   -webkit-tap-highlight-color: transparent;
 }
-.btn-maps:hover, .btn-maps:active { background: var(--teal-light); color: var(--dark); }
+.btn-maps:hover, .btn-maps:active { background: rgba(237,218,200,0.1); }
 
 /* ══════════════ WEDDING GIFT (LIGHT) ══════════════ */
 #gift { background: var(--cream); padding: var(--sec-pad); position: relative; }
@@ -227,18 +279,17 @@ body {
 .btn-gift-toggle {
   display: inline-flex; align-items: center; gap: 10px;
   margin-top: 32px; padding: 13px 32px;
-  background: transparent; border: 1px solid var(--teal);
-  color: var(--teal-dark); font-family: 'Jost', sans-serif;
+  background: transparent; border: 1px solid var(--maroon);
+  color: var(--maroon-dark); font-family: 'Jost', sans-serif;
   font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase;
   cursor: pointer; transition: background 0.3s, color 0.3s;
   -webkit-tap-highlight-color: transparent;
 }
-.btn-gift-toggle:hover, .btn-gift-toggle:active { background: var(--teal); color: var(--cream); }
+.btn-gift-toggle:hover, .btn-gift-toggle:active { background: var(--maroon); color: var(--cream); }
 
 .gift-chevron { transition: transform 0.35s ease; }
 .gift-chevron.open { transform: rotate(180deg); }
 
-/* Collapsible panel */
 .gift-panel {
   max-height: 0; overflow: hidden;
   transition: max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1);
@@ -250,16 +301,17 @@ body {
   gap: 20px; margin-top: 32px;
 }
 @media (min-width: 520px) { .gift-cards { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 800px) { .gift-cards { grid-template-columns: 1fr 1fr 1fr; max-width: 860px; margin-left: auto; margin-right: auto; } }
-@media (min-width: 800px) { #gift .inner { max-width: 880px; } }
+@media (min-width: 800px) {
+  .gift-cards { grid-template-columns: 1fr 1fr 1fr; max-width: 860px; margin-left: auto; margin-right: auto; }
+  #gift .inner { max-width: 880px; }
+}
 
-/* Credit card design */
 .gift-card {
   background: var(--white);
   border-radius: 14px;
   padding: 22px 20px 18px;
   position: relative; overflow: hidden;
-  box-shadow: 0 2px 16px rgba(45,15,24,0.08);
+  box-shadow: 0 2px 20px rgba(30,11,18,0.10);
   text-align: left;
 }
 .gift-card-deco {
@@ -278,7 +330,11 @@ body {
   justify-content: space-between; margin-bottom: 18px;
 }
 .card-chip      { width: 40px; height: 30px; flex-shrink: 0; }
-.card-bank-logo { width: 70px; height: 26px; flex-shrink: 0; }
+/* ✅ Logo bank real dari Wikimedia */
+.card-bank-logo {
+  width: 70px; height: 28px; flex-shrink: 0;
+  object-fit: contain; object-position: right center;
+}
 
 .gift-card-name {
   font-family: 'Jost', sans-serif; font-weight: 400;
@@ -299,26 +355,26 @@ body {
 .btn-copy-card {
   display: inline-flex; align-items: center; gap: 5px;
   padding: 7px 14px; flex-shrink: 0;
-  background: var(--teal-pale); border: 1px solid rgba(125,46,62,0.2);
+  background: var(--maroon-pale); border: 1px solid rgba(125,46,62,0.2);
   color: var(--muted-dark); font-family: 'Jost', sans-serif;
   font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
   cursor: pointer; border-radius: 4px;
   transition: background 0.2s, color 0.2s;
   -webkit-tap-highlight-color: transparent;
 }
-.btn-copy-card:hover, .btn-copy-card:active { background: var(--teal); color: var(--white); border-color: var(--teal); }
+.btn-copy-card:hover, .btn-copy-card:active { background: var(--maroon); color: var(--white); border-color: var(--maroon); }
 .btn-copy-card.copied { background: var(--gold); color: var(--dark); border-color: var(--gold); }
 
-/* ══════════════ RSVP (LIGHT) ══════════════ */
+/* ══════════════ RSVP / UCAPAN (LIGHT) ══════════════ */
 #rsvp { background: var(--cream); padding: var(--sec-pad); position: relative; }
 #rsvp::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
   background: linear-gradient(to right, transparent 0%, rgba(125,46,62,0.22) 25%, rgba(125,46,62,0.22) 75%, transparent 100%);
 }
 #rsvp .inner { max-width: 500px; margin: 0 auto; text-align: center; }
-#rsvp .section-tag   { color: var(--teal-dark); }
+#rsvp .section-tag   { color: var(--maroon-dark); }
 #rsvp .section-title { color: var(--dark); }
-#rsvp .section-title em { color: var(--teal); }
+#rsvp .section-title em { color: var(--maroon); }
 #rsvp .section-body  { color: var(--muted-dark); }
 
 .rsvp-form { margin-top: 40px; display: flex; flex-direction: column; gap: 14px; text-align: left; }
@@ -332,14 +388,14 @@ body {
   font-family: 'Jost', sans-serif; font-size: 0.85rem; font-weight: 300;
   color: var(--dark); outline: none; transition: border-color 0.3s;
   -webkit-appearance: none; border-radius: 0;
-  box-shadow: 0 1px 4px rgba(45,15,24,0.04);
+  box-shadow: 0 1px 4px rgba(30,11,18,0.05);
 }
 .rsvp-form input::placeholder,
 .rsvp-form textarea::placeholder { color: rgba(125,46,62,0.32); }
 .rsvp-form select option { background: var(--white); color: var(--dark); }
 .rsvp-form input:focus,
 .rsvp-form select:focus,
-.rsvp-form textarea:focus { border-color: var(--teal); }
+.rsvp-form textarea:focus { border-color: var(--maroon); }
 .rsvp-form select {
   appearance: none; cursor: pointer;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237D2E3E' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
@@ -349,13 +405,13 @@ body {
 .rsvp-form label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted-dark); display: block; margin-bottom: 6px; }
 
 .btn-submit {
-  width: 100%; padding: 15px; background: var(--teal); color: var(--cream);
+  width: 100%; padding: 15px; background: var(--maroon); color: var(--cream);
   border: none; font-family: 'Jost', sans-serif; font-size: 0.66rem;
   letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer;
   transition: background 0.3s; margin-top: 6px;
   -webkit-tap-highlight-color: transparent;
 }
-.btn-submit:hover, .btn-submit:active { background: var(--teal-dark); color: var(--cream); }
+.btn-submit:hover, .btn-submit:active { background: var(--maroon-dark); }
 
 .rsvp-success {
   display: none; margin-top: 24px; padding: 20px;
@@ -365,132 +421,60 @@ body {
 }
 
 /* ══════════════ FOOTER (LIGHT) ══════════════ */
-footer { background: var(--cream); text-align: center; padding: 48px 20px 56px; border-top: 1px solid rgba(125,46,62,0.14); position: relative; }
-footer .names       { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 5vw, 2.2rem); font-weight: 300; font-style: italic; color: var(--teal-dark); }
+footer {
+  background: var(--cream); text-align: center;
+  padding: 48px 20px 56px;
+  border-top: 1px solid rgba(125,46,62,0.14); position: relative;
+}
+footer .names       { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 5vw, 2.2rem); font-weight: 300; font-style: italic; color: var(--maroon-dark); }
 footer .footer-date { margin-top: 14px; font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted-dark); }
 footer .footer-credit { margin-top: 8px; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(125,46,62,0.3); }
 
 /* ══════════════════════════════════════════════════════════════
-   ILLUSTRATIONS — Hero & Section Floral Accents
+   ILLUSTRATIONS
    ══════════════════════════════════════════════════════════════ */
-
-/* ── Hero: content wrapper (above illustrations z-index) ── */
 .hero-content {
   position: relative; z-index: 1;
-  width: 100%;
-  display: flex; flex-direction: column; align-items: center;
+  width: 100%; display: flex; flex-direction: column; align-items: center;
 }
-
-/* ── Hero: Islamic geometric mandala backdrop ── */
 .hero-mandala {
-  position: absolute;
-  width: min(90%, 380px); height: auto;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.07;
-  pointer-events: none; z-index: 0;
+  position: absolute; width: min(90%, 380px); height: auto;
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  opacity: 0.07; pointer-events: none; z-index: 0;
 }
-
-/* ── Hero: top botanical arch ── */
 .hero-flora-top {
-  position: absolute;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
   width: min(88%, 340px); height: auto;
-  pointer-events: none; z-index: 0;
-  opacity: 0.72;
+  pointer-events: none; z-index: 0; opacity: 0.72;
 }
-@media (min-width: 768px) {
-  .hero-flora-top { width: min(84%, 380px); }
-}
-
-/* ── Hero: bottom botanical spread ── */
+@media (min-width: 768px) { .hero-flora-top { width: min(84%, 380px); } }
 .hero-flora-bot {
-  position: absolute;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%);
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
   width: min(80%, 270px); height: auto;
-  pointer-events: none; z-index: 0;
-  opacity: 0.62;
+  pointer-events: none; z-index: 0; opacity: 0.62;
 }
-@media (min-width: 768px) {
-  .hero-flora-bot { width: min(76%, 300px); }
-}
-
-/* ── Section floral dividers ── */
+@media (min-width: 768px) { .hero-flora-bot { width: min(76%, 300px); } }
 .floral-div {
-  display: block;
-  width: min(76%, 220px); height: auto;
-  margin: 32px auto;
-  pointer-events: none;
-  opacity: 0.62;
+  display: block; width: min(76%, 220px); height: auto;
+  margin: 32px auto; pointer-events: none; opacity: 0.62;
 }
-#acara .floral-div { opacity: 0.48; }
-
-/* ── Event card corner flora ── */
+#acara .floral-div { opacity: 0.52; }
 .card-flora {
-  position: absolute;
-  top: 8px; right: 8px;
-  width: 38px; height: 38px;
-  pointer-events: none;
-  overflow: visible;
+  position: absolute; top: 8px; right: 8px;
+  width: 38px; height: 38px; pointer-events: none; overflow: visible;
 }
-
-/* ── Gift section botanical ── */
 .gift-flora {
-  display: block;
-  width: min(68%, 190px); height: auto;
-  margin: 0 auto 4px;
-  pointer-events: none;
-  opacity: 0.48;
+  display: block; width: min(68%, 190px); height: auto;
+  margin: 0 auto 4px; pointer-events: none; opacity: 0.48;
 }
 
 /* ══════════════════════════════════════════════════════════════
-   MOBILE OVERFLOW — hard locks, no horizontal scroll ever
+   MOBILE OVERFLOW
    ══════════════════════════════════════════════════════════════ */
-
-/* All major layout blocks */
 #hero, #turut, #acara, #gift, #rsvp, footer {
   max-width: 100vw; overflow-x: hidden;
 }
-
-/* Turut long names must wrap */
-.turut-head {
-  word-break: break-word;
-  overflow-wrap: break-word;
+.turut-head, .silsilah-parents, .hero-names {
+  word-break: break-word; overflow-wrap: break-word;
 }
-
-/* Placeholder dashes: clip to column width */
-.ph {
-  overflow: hidden;
-  max-width: 100%;
-  white-space: nowrap;
-}
-
-/* Item turut mengundang yang sudah diisi (bukan placeholder) */
-.turut-item {
-  font-size: 0.72rem;
-  color: var(--teal-light);
-  opacity: 0.78;
-  letter-spacing: 0.06em;
-  list-style: none;
-  line-height: 2.1;
-}
-
-/* Silsilah long parent names must wrap */
-.silsilah-parents {
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
-
-/* Hero sub-heading: ensure it never breaks layout */
-.hero-sub {
-  width: 100%;
-  max-width: min(380px, 90vw);
-}
-
-/* Hero names: allow natural wrap on tiny screens */
-.hero-names {
-  max-width: 100%;
-  overflow-wrap: break-word;
-}
+.hero-sub { width: 100%; max-width: min(380px, 90vw); }
