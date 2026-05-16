@@ -9,6 +9,118 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <style>
+    /* ══ UCAPAN BUTTON (main page) ══ */
+    .btn-ucapan {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: 28px; padding: 15px 40px;
+      background: var(--teal); color: var(--cream);
+      border: none; font-family: 'Jost', sans-serif;
+      font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase;
+      cursor: pointer; transition: background 0.3s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-ucapan:hover, .btn-ucapan:active { background: var(--teal-dark); }
+
+    /* ══ MODAL OVERLAY ══ */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 9998;
+      background: rgba(45, 15, 24, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex; align-items: flex-end; justify-content: center;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+    .modal-overlay.open {
+      opacity: 1; visibility: visible; pointer-events: auto;
+    }
+    .modal-card {
+      background: var(--cream);
+      width: 100%; max-width: 520px;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 36px 24px 48px;
+      position: relative;
+      border-radius: 16px 16px 0 0;
+      transform: translateY(100%);
+      transition: transform 0.45s cubic-bezier(0.34, 1.1, 0.64, 1);
+      -webkit-overflow-scrolling: touch;
+    }
+    .modal-overlay.open .modal-card { transform: translateY(0); }
+    @media (min-width: 600px) {
+      .modal-overlay { align-items: center; }
+      .modal-card { border-radius: 16px; max-height: 82vh; }
+    }
+
+    /* ══ MODAL CLOSE BUTTON ══ */
+    .modal-close-btn {
+      position: absolute; top: 14px; right: 14px;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(125,46,62,0.08); border: 1px solid rgba(125,46,62,0.18);
+      border-radius: 50%; color: var(--teal-dark);
+      cursor: pointer; transition: background 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .modal-close-btn:hover { background: rgba(125,46,62,0.2); }
+
+    /* ══ MODAL TITLE ══ */
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 400;
+      color: var(--dark); margin-bottom: 24px;
+    }
+    .modal-title em { font-style: italic; color: var(--teal); }
+
+    /* ══ UCAPAN WALL ══ */
+    .ucapan-wall { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+    .ucapan-empty, .ucapan-loading {
+      text-align: center; padding: 24px 16px;
+      font-size: 0.8rem; color: var(--muted-dark);
+      font-style: italic;
+    }
+    .ucapan-loading { letter-spacing: 0.1em; font-style: normal; font-size: 0.72rem; color: var(--muted); }
+
+    .ucapan-item {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 14px 16px; background: var(--white);
+      border: 1px solid rgba(125,46,62,0.1); border-radius: 8px;
+    }
+    .ucapan-avatar {
+      width: 38px; height: 38px; flex-shrink: 0;
+      background: var(--teal); color: var(--cream);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-style: italic;
+    }
+    .ucapan-body { flex: 1; min-width: 0; }
+    .ucapan-meta {
+      display: flex; align-items: center; gap: 8px;
+      flex-wrap: wrap; margin-bottom: 5px;
+    }
+    .ucapan-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.97rem; color: var(--dark);
+    }
+    .ucapan-badge {
+      font-size: 0.48rem; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 99px;
+    }
+    .ucapan-badge.hadir        { background: rgba(52,168,83,0.12); color: #1a7a3a; }
+    .ucapan-badge.berhalangan  { background: rgba(125,46,62,0.1);  color: var(--teal-dark); }
+    .ucapan-text {
+      font-size: 0.82rem; line-height: 1.75;
+      color: var(--muted-dark); margin-bottom: 5px;
+      word-break: break-word;
+    }
+    .ucapan-time {
+      font-size: 0.55rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+    }
+  </style>
 </head>
 <body>
 
@@ -33,19 +145,14 @@
 <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
 <section id="hero">
 
-  <!-- ── Islamic Geometric Mandala Backdrop ── -->
   <svg class="hero-mandala" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <g transform="translate(200,200)" stroke="#C8A96E">
-      <!-- 8-pointed star -->
       <polygon points="0,-120 19.1,-50.8 84.9,-84.9 50.8,-19.1 120,0 50.8,19.1 84.9,84.9 19.1,50.8 0,120 -19.1,50.8 -84.9,84.9 -50.8,19.1 -120,0 -50.8,-19.1 -84.9,-84.9 -19.1,-50.8" stroke-width="0.7" fill="none"/>
-      <!-- Cardinal & diagonal squares -->
       <polygon points="0,-120 120,0 0,120 -120,0" stroke-width="0.45" fill="none"/>
       <polygon points="84.9,-84.9 84.9,84.9 -84.9,84.9 -84.9,-84.9" stroke-width="0.45" fill="none"/>
-      <!-- Concentric circles -->
       <circle r="155" stroke-width="0.3" fill="none"/><circle r="120" stroke-width="0.35" fill="none"/>
       <circle r="85"  stroke-width="0.28" fill="none"/><circle r="50"  stroke-width="0.25" fill="none"/>
       <circle r="20"  stroke-width="0.25" fill="none"/>
-      <!-- 16 outer ring dots @ r=155 -->
       <circle cx="0"      cy="-155"  r="1.4" fill="#C8A96E" stroke="none"/>
       <circle cx="59.3"   cy="-143.2" r="1.4" fill="#C8A96E" stroke="none"/>
       <circle cx="109.6"  cy="-109.6" r="1.4" fill="#C8A96E" stroke="none"/>
@@ -62,7 +169,6 @@
       <circle cx="-143.2" cy="-59.3"  r="1.4" fill="#C8A96E" stroke="none"/>
       <circle cx="-109.6" cy="-109.6" r="1.4" fill="#C8A96E" stroke="none"/>
       <circle cx="-59.3"  cy="-143.2" r="1.4" fill="#C8A96E" stroke="none"/>
-      <!-- 8 star-tip dots @ r=120 -->
       <circle cx="0"     cy="-120"  r="2.5" fill="#C8A96E" stroke="none"/>
       <circle cx="84.9"  cy="-84.9" r="2.5" fill="#C8A96E" stroke="none"/>
       <circle cx="120"   cy="0"     r="2.5" fill="#C8A96E" stroke="none"/>
@@ -74,21 +180,14 @@
     </g>
   </svg>
 
-  <!-- ── Top Botanical Arch ── -->
   <svg class="hero-flora-top" viewBox="0 0 360 108" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
       <g id="rBranchTop">
-        <!-- Main stem upper-right -->
         <path d="M 180,108 C 186,92 205,74 228,58 C 248,44 278,28 322,18" stroke="#C8A96E" stroke-width="1.2" stroke-linecap="round" fill="none"/>
-        <!-- Leaf at ~212,68 -->
         <path d="M 212,68 C 217,56 226,52 230,58 C 225,65 217,67 212,68 Z" fill="#7D2E3E" opacity="0.52"/>
-        <!-- Side branch from ~244,50 -->
         <path d="M 244,50 C 252,38 263,32 269,37" stroke="#C8A96E" stroke-width="0.9" stroke-linecap="round" fill="none"/>
-        <!-- Leaf at branch end -->
         <path d="M 269,37 C 276,25 285,22 287,29 C 282,35 275,37 269,37 Z" fill="#7D2E3E" opacity="0.48"/>
-        <!-- Leaf near stem tip -->
         <path d="M 285,28 C 281,17 272,15 270,22 C 273,28 281,29 285,28 Z" fill="#7D2E3E" opacity="0.42"/>
-        <!-- 6-petal flower at stem tip -->
         <g transform="translate(322,18)">
           <ellipse cx="0" cy="-6" rx="2.2" ry="5.2" fill="#C8A96E" opacity="0.82"/>
           <ellipse cx="0" cy="-6" rx="2.2" ry="5.2" fill="#C8A96E" opacity="0.82" transform="rotate(60)"/>
@@ -98,15 +197,11 @@
           <ellipse cx="0" cy="-6" rx="2.2" ry="5.2" fill="#C8A96E" opacity="0.82" transform="rotate(300)"/>
           <circle r="2.2" fill="#C8A96E"/>
         </g>
-        <!-- Small bud near base -->
         <path d="M 193,96 C 198,86 206,83 208,90 C 204,95 196,97 193,96 Z" fill="#7D2E3E" opacity="0.42"/>
       </g>
     </defs>
-    <!-- Right branch -->
     <use href="#rBranchTop"/>
-    <!-- Left branch (mirrored: x → 360−x) -->
     <use href="#rBranchTop" transform="translate(360,0) scale(-1,1)"/>
-    <!-- Central ornament -->
     <g transform="translate(180,14)" stroke="#C8A96E" fill="none">
       <circle r="6.5" stroke-width="0.7"/>
       <circle r="2.8" fill="#C8A96E" stroke="none"/>
@@ -117,7 +212,6 @@
     </g>
   </svg>
 
-  <!-- ── Hero Text Content ── -->
   <div class="hero-content">
     <p class="hero-tag fade-up">Bismillahirrahmanirrahim</p>
     <div class="divider fade-up"></div>
@@ -153,17 +247,12 @@
     <p class="hero-date fade-up">14 · 06 · 2026</p>
   </div>
 
-  <!-- ── Bottom Botanical Spread ── -->
   <svg class="hero-flora-bot" viewBox="0 0 300 62" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
       <g id="rBranchBot">
-        <!-- Stem going right -->
         <path d="M 150,14 C 160,24 176,36 200,46 C 218,52 240,56 265,56" stroke="#C8A96E" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-        <!-- Leaf at ~188,42 -->
         <path d="M 188,42 C 193,31 202,28 205,34 C 201,40 193,42 188,42 Z" fill="#7D2E3E" opacity="0.48"/>
-        <!-- Leaf near end ~247,56 -->
         <path d="M 247,56 C 252,46 260,43 262,49 C 258,55 251,57 247,56 Z" fill="#7D2E3E" opacity="0.42"/>
-        <!-- 5-petal flower at end -->
         <g transform="translate(265,56)">
           <ellipse cx="0" cy="-5.5" rx="2" ry="4.5" fill="#C8A96E" opacity="0.78"/>
           <ellipse cx="0" cy="-5.5" rx="2" ry="4.5" fill="#C8A96E" opacity="0.78" transform="rotate(72)"/>
@@ -174,11 +263,8 @@
         </g>
       </g>
     </defs>
-    <!-- Right branch -->
     <use href="#rBranchBot"/>
-    <!-- Left branch (mirrored: x → 300−x) -->
     <use href="#rBranchBot" transform="translate(300,0) scale(-1,1)"/>
-    <!-- Centre dot -->
     <circle cx="150" cy="14" r="3" fill="#C8A96E"/>
   </svg>
 
@@ -236,7 +322,6 @@
 <!-- ═════════════════════════ RANGKAIAN ACARA + LOKASI ═════════════════════════ -->
 <section id="acara">
 
-  <!-- Countdown strip (merged) -->
   <div class="cd-inner fade-up">
     <p class="cd-tag">Menuju Hari Bahagia</p>
     <div class="countdown-grid">
@@ -247,18 +332,15 @@
     </div>
   </div>
 
-  <!-- Floral divider replacing plain gold-line -->
   <svg class="floral-div fade-up" viewBox="0 0 240 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <g transform="translate(120,26)">
       <rect x="-5" y="-5" width="10" height="10" transform="rotate(45)" stroke="#C8A96E" stroke-width="0.8" fill="none"/>
       <circle r="2.2" fill="#C8A96E"/>
     </g>
-    <!-- Left stem & leaves -->
     <path d="M 115,26 C 102,23 86,21 68,23" stroke="#C8A96E" stroke-width="0.9" stroke-linecap="round" opacity="0.8"/>
     <path d="M 92,22 C 88,14 80,12 78,18 C 80,24 88,23 92,22 Z" fill="#7D2E3E" opacity="0.5"/>
     <path d="M 68,23 C 64,15 56,13 55,19 C 57,25 64,24 68,23 Z" fill="#7D2E3E" opacity="0.44"/>
     <circle cx="50" cy="22" r="2.2" fill="#C8A96E" opacity="0.55"/>
-    <!-- Right stem & leaves (mirror) -->
     <path d="M 125,26 C 138,23 154,21 172,23" stroke="#C8A96E" stroke-width="0.9" stroke-linecap="round" opacity="0.8"/>
     <path d="M 148,22 C 152,14 160,12 162,18 C 160,24 152,23 148,22 Z" fill="#7D2E3E" opacity="0.5"/>
     <path d="M 172,23 C 176,15 184,13 185,19 C 183,25 176,24 172,23 Z" fill="#7D2E3E" opacity="0.44"/>
@@ -303,7 +385,6 @@
     Simpan ke Google Calendar
   </button>
 
-  <!-- ── Lokasi (merged) ── -->
   <div class="acara-lokasi fade-up">
     <div class="gold-line" style="margin:52px auto 40px;"></div>
     <p class="section-tag fade-up">Lokasi</p>
@@ -330,7 +411,6 @@
       kami menerimanya dengan penuh syukur.
     </p>
 
-    <!-- Small botanical accent -->
     <svg class="gift-flora fade-up" viewBox="0 0 200 46" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
         <g id="giftBranch">
@@ -369,40 +449,7 @@
     <div class="gift-panel" id="giftPanel">
       <div class="gift-cards">
 
-        <!-- BRI -->
-        <div class="gift-card">
-          <div class="gift-card-deco"></div>
-          <div class="gift-card-top">
-            <svg class="card-chip" viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="1" y="1" width="38" height="28" rx="4" fill="#C8A96E" stroke="#A8894E" stroke-width="0.6"/>
-              <line x1="14" y1="1" x2="14" y2="29" stroke="#A8894E" stroke-width="0.6"/>
-              <line x1="26" y1="1" x2="26" y2="29" stroke="#A8894E" stroke-width="0.6"/>
-              <line x1="1" y1="10" x2="39" y2="10" stroke="#A8894E" stroke-width="0.6"/>
-              <line x1="1" y1="20" x2="39" y2="20" stroke="#A8894E" stroke-width="0.6"/>
-              <rect x="15" y="11" width="10" height="8" rx="1.5" fill="#A8894E" opacity="0.4"/>
-            </svg>
-            <svg class="card-bank-logo" viewBox="0 0 70 26" xmlns="http://www.w3.org/2000/svg">
-              <rect width="70" height="26" rx="4" fill="#003087"/>
-              <rect x="6" y="7" width="2.5" height="12" rx="1.2" fill="#F7941D" opacity="0.9"/>
-              <rect x="11" y="4" width="2.5" height="18" rx="1.2" fill="#F7941D" opacity="0.7"/>
-              <rect x="16" y="9" width="2.5" height="8"  rx="1.2" fill="#F7941D" opacity="0.5"/>
-              <text x="42" y="18" text-anchor="middle" fill="#FFF" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="12" letter-spacing="1.5">BRI</text>
-            </svg>
-          </div>
-          <div class="gift-card-name">Taufik Hidayat</div>
-          <div class="gift-card-bottom">
-            <span class="gift-card-number" id="bri-number">407701030044506</span>
-            <button class="btn-copy-card" onclick="copyNumber('bri-number', this)">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="9" y="9" width="13" height="13" rx="2"/>
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-              </svg>
-              <span>Salin</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- BCA -->
+        <!-- BCA — Taufik -->
         <div class="gift-card">
           <div class="gift-card-deco"></div>
           <div class="gift-card-top">
@@ -432,7 +479,7 @@
           </div>
         </div>
 
-        <!-- DANA -->
+        <!-- DANA — Taufik -->
         <div class="gift-card">
           <div class="gift-card-deco"></div>
           <div class="gift-card-top">
@@ -468,27 +515,95 @@
           </div>
         </div>
 
+        <!-- BCA — Ati (⚠️ Ganti nomor di bawah ini) -->
+        <div class="gift-card">
+          <div class="gift-card-deco"></div>
+          <div class="gift-card-top">
+            <svg class="card-chip" viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1" y="1" width="38" height="28" rx="4" fill="#C8A96E" stroke="#A8894E" stroke-width="0.6"/>
+              <line x1="14" y1="1" x2="14" y2="29" stroke="#A8894E" stroke-width="0.6"/>
+              <line x1="26" y1="1" x2="26" y2="29" stroke="#A8894E" stroke-width="0.6"/>
+              <line x1="1" y1="10" x2="39" y2="10" stroke="#A8894E" stroke-width="0.6"/>
+              <line x1="1" y1="20" x2="39" y2="20" stroke="#A8894E" stroke-width="0.6"/>
+              <rect x="15" y="11" width="10" height="8" rx="1.5" fill="#A8894E" opacity="0.4"/>
+            </svg>
+            <svg class="card-bank-logo" viewBox="0 0 70 26" xmlns="http://www.w3.org/2000/svg">
+              <rect width="70" height="26" rx="4" fill="#005BAA"/>
+              <text x="35" y="18" text-anchor="middle" fill="#FFF" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="11" letter-spacing="1.5">BCA</text>
+            </svg>
+          </div>
+          <div class="gift-card-name">Ati Suparti, S.E.</div>
+          <div class="gift-card-bottom">
+            <!-- ⚠️ GANTI: isi nomor rekening BCA istri di sini -->
+            <span class="gift-card-number" id="bca-ati-number">XXXXXXXXXX</span>
+            <button class="btn-copy-card" onclick="copyNumber('bca-ati-number', this)">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span>Salin</span>
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 </div>
 
 
-<!-- ════════════════════════════════ RSVP ════════════════════════════════ -->
+<!-- ═══════════════════════ UCAPAN & DOA (tombol → modal) ═══════════════════════ -->
 <div id="rsvp">
   <div class="inner">
-    <p class="section-tag fade-up">Konfirmasi Kehadiran</p>
-    <h2 class="section-title fade-up">RSVP</h2>
-    <p class="section-body fade-up">Mohon konfirmasi kehadiran Anda paling lambat 7 hari sebelum acara.</p>
+    <p class="section-tag fade-up">Ucapan &amp; Doa</p>
+    <h2 class="section-title fade-up">Kirim <em>Ucapan</em></h2>
+    <p class="section-body fade-up">
+      Tuliskan doa dan ucapan terbaik Anda untuk kedua mempelai.<br/>
+      Setiap kata adalah kehormatan dan kebahagiaan bagi kami.
+    </p>
+    <button class="btn-ucapan fade-up" onclick="openRsvpModal()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      Tulis Ucapan &amp; Konfirmasi
+    </button>
+  </div>
+</div>
 
-    <form class="rsvp-form fade-up" id="rsvpForm" onsubmit="handleRSVP(event)">
+
+<!-- ══════════════════════════════ FOOTER ══════════════════════════════ -->
+<footer>
+  <svg class="ornament ornament-sm" viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="12" x2="42" y2="12" stroke="#7D2E3E" stroke-width="0.5" opacity="0.4"/>
+    <circle cx="60" cy="12" r="5" stroke="#C8A96E" stroke-width="0.6" fill="none"/>
+    <circle cx="60" cy="12" r="2" fill="#C8A96E"/>
+    <line x1="78" y1="12" x2="120" y2="12" stroke="#7D2E3E" stroke-width="0.5" opacity="0.4"/>
+    <circle cx="46" cy="12" r="2" fill="#7D2E3E" opacity="0.35"/>
+    <circle cx="74" cy="12" r="2" fill="#7D2E3E" opacity="0.35"/>
+  </svg>
+  <div class="names" style="margin-top:28px;">Taufik &amp; Ati</div>
+  <p class="footer-date">14 · 06 · 2026 — Cianjur</p>
+  <p class="footer-credit">Dibuat dengan pusing ✦</p>
+</footer>
+
+
+<!-- ══════════════════════════ UCAPAN MODAL ══════════════════════════ -->
+<div id="rsvpModal" class="modal-overlay" onclick="handleModalClick(event)">
+  <div class="modal-card" id="modalCard">
+
+    <button class="modal-close-btn" onclick="closeRsvpModal()" aria-label="Tutup">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
+    <p class="section-tag" style="color:var(--teal-dark); margin-bottom:4px;">Ucapan &amp; Doa</p>
+    <h3 class="modal-title">Kirim <em>Ucapan</em></h3>
+
+    <form class="rsvp-form" id="rsvpForm" onsubmit="handleRSVP(event)">
       <div>
         <label for="name">Nama Lengkap</label>
         <input type="text" id="name" name="name" placeholder="Masukkan nama Anda" required />
-      </div>
-      <div>
-        <label for="phone">Nomor WhatsApp</label>
-        <input type="tel" id="phone" name="phone" placeholder="08xxxxxxxxxx" />
       </div>
       <div>
         <label for="attendance">Kehadiran</label>
@@ -511,30 +626,23 @@
         <label for="message">Ucapan &amp; Doa</label>
         <textarea id="message" name="message" placeholder="Tuliskan ucapan dan doa untuk kedua mempelai..."></textarea>
       </div>
-      <button type="submit" class="btn-submit">Kirim Konfirmasi</button>
+      <button type="submit" class="btn-submit">Kirim Ucapan</button>
     </form>
 
     <div class="rsvp-success" id="rsvpSuccess">
-      Terima kasih atas konfirmasi dan doa tulus Anda 🤍
+      Terima kasih atas doa dan ucapan tulus Anda 🤍
     </div>
+
+    <div class="gold-line" style="margin: 28px auto 20px;"></div>
+    <p class="section-tag" style="text-align:center; margin-bottom:16px; color:var(--teal-dark);">Doa &amp; Ucapan Tamu</p>
+
+    <div class="ucapan-wall" id="ucapanWall">
+      <p class="ucapan-loading" id="ucapanLoading">Memuat ucapan…</p>
+    </div>
+
   </div>
 </div>
 
-
-<!-- ══════════════════════════════ FOOTER ══════════════════════════════ -->
-<footer>
-  <svg class="ornament ornament-sm" viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="0" y1="12" x2="42" y2="12" stroke="#7D2E3E" stroke-width="0.5" opacity="0.4"/>
-    <circle cx="60" cy="12" r="5" stroke="#C8A96E" stroke-width="0.6" fill="none"/>
-    <circle cx="60" cy="12" r="2" fill="#C8A96E"/>
-    <line x1="78" y1="12" x2="120" y2="12" stroke="#7D2E3E" stroke-width="0.5" opacity="0.4"/>
-    <circle cx="46" cy="12" r="2" fill="#7D2E3E" opacity="0.35"/>
-    <circle cx="74" cy="12" r="2" fill="#7D2E3E" opacity="0.35"/>
-  </svg>
-  <div class="names" style="margin-top:28px;">Taufik &amp; Ati</div>
-  <p class="footer-date">14 · 06 · 2026 — Cianjur</p>
-  <p class="footer-credit">Dibuat dengan pusing ✦</p>
-</footer>
 
 <script src="script.js"></script>
 <script src="music.js"></script>
