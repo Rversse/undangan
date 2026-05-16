@@ -11,6 +11,13 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 
   <style>
+    /* ══ CARD BANK LOGO (real images) ══ */
+    .card-bank-logo {
+      width: 70px; height: 26px;
+      object-fit: contain; object-position: right center;
+      flex-shrink: 0;
+    }
+
     /* ══ UCAPAN BUTTON (main page) ══ */
     .btn-ucapan {
       display: inline-flex; align-items: center; gap: 10px;
@@ -461,10 +468,7 @@
               <line x1="1" y1="20" x2="39" y2="20" stroke="#A8894E" stroke-width="0.6"/>
               <rect x="15" y="11" width="10" height="8" rx="1.5" fill="#A8894E" opacity="0.4"/>
             </svg>
-            <svg class="card-bank-logo" viewBox="0 0 70 26" xmlns="http://www.w3.org/2000/svg">
-              <rect width="70" height="26" rx="4" fill="#005BAA"/>
-              <text x="35" y="18" text-anchor="middle" fill="#FFF" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="11" letter-spacing="1.5">BCA</text>
-            </svg>
+            <img class="card-bank-logo" src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" alt="BCA" />
           </div>
           <div class="gift-card-name">Taufik Hidayat</div>
           <div class="gift-card-bottom">
@@ -491,16 +495,7 @@
               <line x1="1" y1="20" x2="39" y2="20" stroke="#A8894E" stroke-width="0.6"/>
               <rect x="15" y="11" width="10" height="8" rx="1.5" fill="#A8894E" opacity="0.4"/>
             </svg>
-            <svg class="card-bank-logo" viewBox="0 0 70 26" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="dg" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#1AA3E8"/>
-                  <stop offset="100%" stop-color="#0070CC"/>
-                </linearGradient>
-              </defs>
-              <rect width="70" height="26" rx="13" fill="url(#dg)"/>
-              <text x="35" y="18" text-anchor="middle" fill="#FFF" font-family="Arial,sans-serif" font-weight="700" font-size="11" letter-spacing="1">dana</text>
-            </svg>
+            <img class="card-bank-logo" src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg" alt="DANA" />
           </div>
           <div class="gift-card-name">Taufik Hidayat</div>
           <div class="gift-card-bottom">
@@ -527,16 +522,12 @@
               <line x1="1" y1="20" x2="39" y2="20" stroke="#A8894E" stroke-width="0.6"/>
               <rect x="15" y="11" width="10" height="8" rx="1.5" fill="#A8894E" opacity="0.4"/>
             </svg>
-            <svg class="card-bank-logo" viewBox="0 0 70 26" xmlns="http://www.w3.org/2000/svg">
-              <rect width="70" height="26" rx="4" fill="#005BAA"/>
-              <text x="35" y="18" text-anchor="middle" fill="#FFF" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="11" letter-spacing="1.5">BCA</text>
-            </svg>
+            <img class="card-bank-logo" src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Bank_Mandiri_logo_2016.svg" alt="Bank Mandiri" />
           </div>
           <div class="gift-card-name">Ati Suparti, S.E.</div>
           <div class="gift-card-bottom">
-            <!-- ⚠️ GANTI: isi nomor rekening BCA istri di sini -->
-            <span class="gift-card-number" id="bca-ati-number">XXXXXXXXXX</span>
-            <button class="btn-copy-card" onclick="copyNumber('bca-ati-number', this)">
+            <span class="gift-card-number" id="mandiri-ati-number">1820017231457</span>
+            <button class="btn-copy-card" onclick="copyNumber('mandiri-ati-number', this)">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="9" y="9" width="13" height="13" rx="2"/>
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
